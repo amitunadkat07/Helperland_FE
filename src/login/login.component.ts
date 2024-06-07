@@ -30,10 +30,11 @@ export class LoginComponent {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
           sessionStorage.setItem("role", res.roleId);
-          alert('Logged in Successfully...');
+          this.toaster.success('Logged in Successfully...');
+          this.router.navigate(["dashboard"]);
       },
     (error)=>{
-      alert(error.error);
+      this.toaster.error(error.error.errorMessage);
     });
   }
 
@@ -49,6 +50,16 @@ export class LoginComponent {
         document.querySelectorAll(".hideImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "none");
         document.querySelectorAll(".showImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "block");
     }
+  }
+
+  openSignup():void{
+    const referenceVar = this.dialog.open(SignupcustomerComponent, {
+      width: '400px',
+      height: '510px'
+    });
+    referenceVar.afterClosed().subscribe(()=>{
+      console.log("Pop-up closed");
+    })
   }
 }
 

@@ -41,13 +41,8 @@ export class SignupcustomerComponent {
 
   openLogin():void{
     const referenceVar = this.dialog.open(LoginComponent, {
-<<<<<<< HEAD
       width: '350px',
       height: '380px'
-=======
-      width: '400px',
-      height: '370px'
->>>>>>> f29c2562e10792239331eee1d9b33b00b128741b
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
