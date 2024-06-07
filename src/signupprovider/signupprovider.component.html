@@ -1,0 +1,63 @@
+<h1 class="text-center" mat-dialog-title>Register as Helper!</h1>
+<mat-dialog-content>
+    <form #signupForm="ngForm" (submit)="onSubmit()">
+        <div class="row mb-4">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+            <input type="text" [(ngModel)]="signupObject.FirstName" class="w-100" name="Firstname" placeholder="Firstname" required />
+            <div *ngIf="signupForm.controls['Firstname'].invalid && (signupForm.controls['Firstname'].dirty || signupForm.controls['Firstname'].touched)" class="text-danger">
+              First Name is required
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+                <input type="text" [(ngModel)]="signupObject.LastName" class="w-100" name="Lastname" placeholder="Surname" required />
+                <div *ngIf="signupForm.controls['Lastname'].invalid && (signupForm.controls['Lastname'].dirty || signupForm.controls['Lastname'].touched)" class="text-danger">
+                  Last Name is required
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+                <input type="email" [(ngModel)]="signupObject.Email" class="w-100" name="Email" placeholder="Email Address" required />
+                <div *ngIf="signupForm.controls['Email'].invalid && (signupForm.controls['Email'].dirty || signupForm.controls['Email'].touched)" class="text-danger">
+                  <div *ngIf="signupForm.controls['Email'].errors?.['required']">Email is required</div>
+                  <div *ngIf="signupForm.controls['Email'].errors?.['email']">Invalid email format</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+              <input type="text" [(ngModel)]="signupObject.Contact" class="w-100" name="Mobile" placeholder="Phone Number" required />
+              <div *ngIf="signupForm.controls['Mobile'].invalid && (signupForm.controls['Mobile'].dirty || signupForm.controls['Mobile'].touched)" class="text-danger">
+                Phone Number is required
+              </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+                <input type="password" [(ngModel)]="signupObject.Password" class="w-100" name="Password" placeholder="Password" required />
+                <div *ngIf="signupForm.controls['Password'].invalid && (signupForm.controls['Password'].dirty || signupForm.controls['Password'].touched)" class="text-danger">
+                  Password is required
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+                <input type="password" [(ngModel)]="signupObject.ConfPassword" class="w-100" name="Confpassword" placeholder="Confirm Passsword" required />
+                <div *ngIf="signupForm.controls['Confpassword'].invalid && (signupForm.controls['Confpassword'].dirty || signupForm.controls['Confpassword'].touched)" class="text-danger">
+                  Confirm Password is required
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="w-100" value="signupObject.RoleId" [(ngModel)]="signupObject.RoleId" name="RoleId" placeholder="Role Id" />
+        <mat-checkbox required>I accept terms and conditions & privacy policy .</mat-checkbox>
+        <div class="d-flex justify-content-center mt-5">
+<<<<<<< HEAD
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 mb-5 py-3" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
+=======
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 mb-5 py-3" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
+>>>>>>> f29c2562e10792239331eee1d9b33b00b128741b
+        </div>
+    </form>
+</mat-dialog-content>

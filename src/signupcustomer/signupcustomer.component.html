@@ -1,0 +1,58 @@
+<h1 class="text-center" mat-dialog-title>Create an account</h1>
+<mat-dialog-content>
+    <form #signupForm="ngForm" (submit)="onSubmit()">
+        <div class="row mb-3">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+            <input type="text" class="w-100" [(ngModel)]="signupObject.FirstName" name="Firstname" placeholder="First Name" required />
+            <div *ngIf="signupForm.controls['Firstname'].invalid && (signupForm.controls['Firstname'].dirty || signupForm.controls['Firstname'].touched)" class="text-danger">
+              First Name is required
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+            <input type="text" class="w-100" [(ngModel)]="signupObject.LastName" name="Lastname" placeholder="Last Name" required />
+            <div *ngIf="signupForm.controls['Lastname'].invalid && (signupForm.controls['Lastname'].dirty || signupForm.controls['Lastname'].touched)" class="text-danger">
+              Last Name is required
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+              <input type="email" class="w-100" [(ngModel)]="signupObject.Email" name="Email" placeholder="Email Address" required />
+              <div *ngIf="signupForm.controls['Email'].invalid && (signupForm.controls['Email'].dirty || signupForm.controls['Email'].touched)" class="text-danger">
+                <div *ngIf="signupForm.controls['Email'].errors?.['required']">Email is required</div>
+                <div *ngIf="signupForm.controls['Email'].errors?.['email']">Invalid email format</div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+              <input type="text" class="w-100" [(ngModel)]="signupObject.Contact" name="Mobile" placeholder="Mobile Number" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+                <input type="password" class="w-100" [(ngModel)]="signupObject.Password" name="Password" placeholder="Password" required />
+                <div *ngIf="signupForm.controls['Password'].invalid && (signupForm.controls['Password'].dirty || signupForm.controls['Password'].touched)" class="text-danger">
+                  Password is required
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 form-floating mb-4">
+                <input type="password" class="w-100" [(ngModel)]="signupObject.ConfPassword" name="Confpassword" placeholder="Confirm Passsword" required />
+                <div *ngIf="signupForm.controls['Confpassword'].invalid && (signupForm.controls['Confpassword'].dirty || signupForm.controls['Confpassword'].touched)" class="text-danger">
+                  Confirm Password is required
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="w-100" value="signupObject.RoleId" [(ngModel)]="signupObject.RoleId" name="RoleId" placeholder="Role Id" />
+        <mat-checkbox required>I have read the privacy policy .</mat-checkbox>
+        <div class="d-flex justify-content-center">
+<<<<<<< HEAD
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-5 py-3" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Register</button>
+=======
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-5 py-3" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Register</button>
+>>>>>>> f29c2562e10792239331eee1d9b33b00b128741b
+        </div>
+        <p class="text-center">
+            Already registered?
+            <a class="text-decoration-none" mat-button (click)="openLogin()" mat-dialog-close>Login now</a>
+          </p>
+    </form>
+</mat-dialog-content>

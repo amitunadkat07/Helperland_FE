@@ -1,0 +1,48 @@
+.email {
+    position: relative;
+}
+
+.email button {
+    position: absolute;
+    right: 1.5rem;
+    padding: 3px;
+    background-color: inherit;
+    padding-right: 3px;
+    border: 0;
+}
+
+.email button:hover {
+    cursor: pointer;
+}
+
+.password {
+    position: relative;
+}
+
+.password button {
+    position: absolute;
+    right: 1.5rem;
+    top: 0.3rem;
+    background-color: inherit;
+    padding: 3px;
+    padding-right: 3px;
+    border: 0;
+}
+
+.password button:hover {
+    cursor: pointer;
+}
+
+.showImg {
+    display: none;
+}
+
+.hideImg {
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+.signup {
+    text-decoration: none;
+}
