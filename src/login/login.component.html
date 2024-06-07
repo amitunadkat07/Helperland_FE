@@ -8,7 +8,7 @@
     </button>
   </div>
 </div>
-<mat-dialog-content>
+<mat-dialog-content class="overflow-hidden">
   <form #loginForm="ngForm" (submit)="onSubmit()">
     <div class="row mb-3">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating mb-4 email">
@@ -30,6 +30,9 @@
       </div>
     </div>
     <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5 py-3" mat-button mat-dialog-close [disabled]="loginForm.invalid">Login</button>
+    <p class="text-center">
+      <a class="signup" mat-button mat-dialog-close (click)="openForgetPassword()">Forgot Password?</a>
+    </p>
     <p class="text-center">
       Don't have an account?
       <a class="signup" mat-button mat-dialog-close (click)="openSignup()">Create an account</a>

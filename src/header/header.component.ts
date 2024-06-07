@@ -26,8 +26,8 @@ export class HeaderComponent {
 
   openSignup():void{
     const referenceVar = this.dialog.open(SignupproviderComponent, {
-      width: '400px',
-      height: '510px'
+      width: '370px',
+      height: '750px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");

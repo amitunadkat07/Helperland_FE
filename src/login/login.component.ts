@@ -54,7 +54,17 @@ export class LoginComponent {
 
   openSignup():void{
     const referenceVar = this.dialog.open(SignupcustomerComponent, {
-      width: '400px',
+      width: '370px',
+      height: '420px'
+    });
+    referenceVar.afterClosed().subscribe(()=>{
+      console.log("Pop-up closed");
+    })
+  }
+
+  openForgetPassword():void{
+    const referenceVar = this.dialog.open(SignupcustomerComponent, {
+      width: '370px',
       height: '510px'
     });
     referenceVar.afterClosed().subscribe(()=>{
