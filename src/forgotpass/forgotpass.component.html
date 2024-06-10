@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between w-100">
+    <div class="ps-5">
+      <h1 class="text-center ms-5" mat-dialog-title>Forgot Password</h1>
+    </div>
+    <div class="text-right">
+      <button mat-button mat-dialog-close class="border-0 bg-transparent mt-4 pt-3 me-2">
+        <i class="fa-solid fa-xmark fa-2xl"></i>
+      </button>
+    </div>
+</div>
+<mat-dialog-content class="overflow-hidden">
+    <form #forgotpassForm="ngForm" (submit)="onSubmit()">
+      <div class="row mb-3">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating mb-4 email">
+          <input type="email" class="w-100" cdkFocusInitial [(ngModel)]="forgotpassObject.Email" name="Email" placeholder="Email" required email />
+          <div *ngIf="forgotpassForm.controls['Email'].invalid && (forgotpassForm.controls['Email'].dirty || forgotpassForm.controls['Email'].touched)" class="text-danger">
+            <div *ngIf="forgotpassForm.controls['Email'].errors?.['required']">Email is required</div>
+            <div *ngIf="forgotpassForm.controls['Email'].errors?.['email']">Invalid email format</div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5 py-3" mat-button mat-dialog-close [disabled]="forgotpassForm.invalid">Send</button>
+      <p class="text-center">
+        <a class="login" mat-button mat-dialog-close (click)="openLogin()">Login Now</a>
+      </p>
+    </form>
+</mat-dialog-content>

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import path from 'path';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { HomeComponent } from '../home/home.component';
+import { ResetpassComponent } from '../resetpass/resetpass.component';
 
 export const routes: Routes = [
     {
@@ -18,5 +19,9 @@ export const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         pathMatch: 'full'
+    },
+    {
+        path: 'resetpassword',
+        component: ResetpassComponent
     }
 ];

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SignupcustomerComponent } from '../signupcustomer/signupcustomer.component';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { ForgotpassComponent } from '../forgotpass/forgotpass.component';
 
 @Component({
   selector: 'app-login',
@@ -63,9 +64,9 @@ export class LoginComponent {
   }
 
   openForgetPassword():void{
-    const referenceVar = this.dialog.open(SignupcustomerComponent, {
+    const referenceVar = this.dialog.open(ForgotpassComponent, {
       width: '370px',
-      height: '510px'
+      height: '300px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
