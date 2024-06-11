@@ -27,16 +27,20 @@ export class LoginComponent {
   onSubmit(): void {
     this.http
       .post('https://localhost:44374/api/Helperland/Login', this.loginObject)
-      .subscribe((res: any) => {
-          sessionStorage.setItem("name", res.firstName + " " + res.lastName);
-          sessionStorage.setItem("email", res.email);
-          sessionStorage.setItem("role", res.roleId);
+      .subscribe({
+        next: (res: any) => {
+          sessionStorage.setItem("Name", res.firstName + " " + res.lastName);
+          sessionStorage.setItem("Email", res.email);
+          sessionStorage.setItem("RoleId", res.roleId);
+          sessionStorage.setItem("Token", res.token);
           this.toaster.success('Logged in Successfully...');
           this.router.navigate(["dashboard"]);
-      },
-    (error)=>{
-      this.toaster.error(error.error.errorMessage);
-    });
+        },
+        error: (error) => {
+          console.log(error);
+          this.toaster.error(error);
+        },
+      });
   }
 
   pwdShowHide(): void {
