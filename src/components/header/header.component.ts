@@ -14,7 +14,7 @@ import { SignupproviderComponent } from '../signupprovider/signupprovider.compon
 export class HeaderComponent {
   constructor(private dialog: MatDialog){ }
   
-  openLogin():void{
+  openLogin(){
     const referenceVar = this.dialog.open(LoginComponent, {
       width: '350px',
       height: '400px'
@@ -24,10 +24,10 @@ export class HeaderComponent {
     })
   }
 
-  openSignup():void{
+  openSignup(){
     const referenceVar = this.dialog.open(SignupproviderComponent, {
       width: '370px',
-      height: '750px'
+      height: '680px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");

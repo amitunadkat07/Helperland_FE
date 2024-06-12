@@ -11,8 +11,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  toaster = inject(ToastrService)
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toaster:ToastrService) {
+    
+  }
+  ngOnInit(){
     this.http
       .get('https://localhost:44374/api/Helperland/GetUsers')
       .subscribe((res: any) => {

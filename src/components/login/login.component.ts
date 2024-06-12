@@ -7,6 +7,7 @@ import { SignupcustomerComponent } from '../signupcustomer/signupcustomer.compon
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ForgotpassComponent } from '../forgotpass/forgotpass.component';
+import { LoginInterface } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-login',
@@ -16,15 +17,16 @@ import { ForgotpassComponent } from '../forgotpass/forgotpass.component';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  loginObject: Login;
-
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {
-    this.loginObject = new Login();
+  loginObject: LoginInterface = {
+    Email: '',
+    Password: ''
   }
 
-  toaster = inject(ToastrService);
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService) {
+  
+  }
 
-  onSubmit(): void {
+  onSubmit(){
     this.http
       .post('https://localhost:44374/api/Helperland/Login', this.loginObject)
       .subscribe({
@@ -43,7 +45,7 @@ export class LoginComponent {
       });
   }
 
-  pwdShowHide(): void {
+  pwdShowHide(){
     const x: HTMLInputElement | null = document.getElementById("password") as HTMLInputElement;
     if (x?.type === "password") {
         x.type = "text";
@@ -57,7 +59,7 @@ export class LoginComponent {
     }
   }
 
-  openSignup():void{
+  openSignup(){
     const referenceVar = this.dialog.open(SignupcustomerComponent, {
       width: '370px',
       height: '420px'
@@ -67,7 +69,7 @@ export class LoginComponent {
     })
   }
 
-  openForgetPassword():void{
+  openForgetPassword(){
     const referenceVar = this.dialog.open(ForgotpassComponent, {
       width: '370px',
       height: '300px'
@@ -75,14 +77,5 @@ export class LoginComponent {
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
     })
-  }
-}
-
-export class Login {
-  Email: string;
-  Password: string;
-  constructor() {
-    this.Email = '';
-    this.Password = '';
   }
 }

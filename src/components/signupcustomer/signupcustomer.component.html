@@ -47,7 +47,7 @@
         <input type="hidden" class="w-100" value="signupObject.RoleId" [(ngModel)]="signupObject.RoleId" name="RoleId" placeholder="Role Id" />
         <mat-checkbox name="PrivacyPolicy" ngModel required>I have read the privacy policy .</mat-checkbox>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-5 py-3" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Register</button>
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-5 py-3 submitBtn" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Register</button>
         </div>
         <p class="text-center">
             Already registered?

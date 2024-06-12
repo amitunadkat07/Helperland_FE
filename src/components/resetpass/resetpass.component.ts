@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ResetPassInterface, UrlCheckInterface } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-resetpass',
@@ -13,21 +14,25 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './resetpass.component.css'
 })
 export class ResetpassComponent {
-  urlObject: UrlCheck;
-  resetObject: ResetPass;
+  urlObject: UrlCheckInterface ={
+    Email: '',
+    ResetKey: ''
+  }
+  resetObject: ResetPassInterface = {
+    Email: '',
+    Password: ''
+  }
 
-  toaster = inject(ToastrService);
-
-  constructor(private http: HttpClient, private routes: ActivatedRoute, private router: Router) {
-    this.urlObject = new UrlCheck();
-    this.resetObject = new ResetPass();
+  constructor(private http: HttpClient, private routes: ActivatedRoute, private router: Router, private toaster: ToastrService) {
 
     this.routes.queryParams.subscribe(params => {
       this.urlObject.ResetKey = params['t'];
       this.urlObject.Email = params['e'];
       this.resetObject.Email = params['e'];
     });
+  }
 
+  ngOnInit(){
     this.http
       .post('https://localhost:44374/api/Helperland/ResetPassLink', this.urlObject)
       .subscribe((res: any) => {
@@ -39,7 +44,7 @@ export class ResetpassComponent {
     });
   }
 
-  onSubmit(): void {
+  onSubmit(){
     this.http
       .post('https://localhost:44374/api/Helperland/ResetPass', this.resetObject)
       .subscribe((res: any) => {
@@ -49,23 +54,5 @@ export class ResetpassComponent {
     (error)=>{
       this.toaster.error(error.error.errorMessage);
     });
-  }
-}
-
-export class UrlCheck {
-  Email: string;
-  ResetKey: string;
-  constructor() {
-    this.Email = '';
-    this.ResetKey = '';
-  }
-}
-
-export class ResetPass {
-  Email: string;
-  Password: string;
-  constructor() {
-    this.Email = '';
-    this.Password = '';
   }
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { SignupInterface } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-signupprovider',
@@ -14,15 +15,20 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './signupprovider.component.css'
 })
 export class SignupproviderComponent {
-  signupObject: Signup;
-
-  constructor(private http: HttpClient, private dialog: MatDialog){
-    this.signupObject = new Signup();
+  signupObject: SignupInterface = {
+    Email: '',
+    Password: '',
+    FirstName: '',
+    LastName: '',
+    ConfPassword: '',
+    Contact: '',
+    RoleId: 3
   }
 
-  toaster = inject(ToastrService);
+  constructor(private http: HttpClient, private dialog: MatDialog, private toaster: ToastrService){
+  }
 
-  onSubmit(): void {
+  onSubmit(){
     this.http
       .post('https://localhost:44374/api/Helperland/Signup', this.signupObject)
       .subscribe((res: any) => {
@@ -34,24 +40,5 @@ export class SignupproviderComponent {
     (error)=>{
       this.toaster.error(error.error);
     });
-  }
-}
-
-export class Signup {
-  Email: string;
-  Password: string;
-  FirstName: string;
-  LastName: string;
-  ConfPassword: string;
-  Contact: string;
-  RoleId: any;
-  constructor() {
-    this.Email = '';
-    this.Password = '';
-    this.FirstName = '';
-    this.LastName = '';
-    this.ConfPassword = '';
-    this.Contact = '';
-    this.RoleId = 3;
   }
 }

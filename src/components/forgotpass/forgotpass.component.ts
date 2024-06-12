@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../login/login.component';
+import { ForgotPassInterface } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-forgotpass',
@@ -15,15 +16,14 @@ import { LoginComponent } from '../login/login.component';
   styleUrl: './forgotpass.component.css'
 })
 export class ForgotpassComponent {
-  forgotpassObject: Forgotpass;
-
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {
-    this.forgotpassObject = new Forgotpass();
+  forgotpassObject: ForgotPassInterface = {
+    Email: ''
   }
 
-  toaster = inject(ToastrService);
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService) {
+  }
 
-  onSubmit(): void {
+  onSubmit(){
     this.http
       .post('https://localhost:44374/api/Helperland/ForgotPass', this.forgotpassObject)
       .subscribe((res: any) => {
@@ -35,7 +35,7 @@ export class ForgotpassComponent {
     });
   }
 
-  openLogin():void{
+  openLogin(){
     const referenceVar = this.dialog.open(LoginComponent, {
       width: '350px',
       height: '400px'
@@ -43,12 +43,5 @@ export class ForgotpassComponent {
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
     })
-  }
-}
-
-export class Forgotpass {
-  Email: string;
-  constructor() {
-    this.Email = '';
   }
 }

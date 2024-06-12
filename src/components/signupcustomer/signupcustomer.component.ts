@@ -7,6 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { SignupInterface } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-signupcustomer',
@@ -16,15 +17,20 @@ import { Router } from '@angular/router';
   styleUrl: './signupcustomer.component.css'
 })
 export class SignupcustomerComponent {
-  signupObject: Signup;
-
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router){
-    this.signupObject = new Signup();
+  signupObject: SignupInterface = {
+    Email: '',
+    Password: '',
+    FirstName: '',
+    LastName: '',
+    ConfPassword: '',
+    Contact: '',
+    RoleId: 3
   }
 
-  toaster = inject(ToastrService);
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService){
+  }
 
-  onSubmit(): void {
+  onSubmit(){
     this.http
       .post('https://localhost:44374/api/Helperland/Signup', this.signupObject)
       .subscribe((res: any) => {
@@ -39,7 +45,7 @@ export class SignupcustomerComponent {
     });
   }
 
-  openLogin():void{
+  openLogin(){
     const referenceVar = this.dialog.open(LoginComponent, {
       width: '350px',
       height: '380px'
@@ -47,24 +53,5 @@ export class SignupcustomerComponent {
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
     })
-  }
-}
-
-export class Signup {
-  Email: string;
-  Password: string;
-  FirstName: string;
-  LastName: string;
-  ConfPassword: string;
-  Contact: string;
-  RoleId: any;
-  constructor() {
-    this.Email = '';
-    this.Password = '';
-    this.FirstName = '';
-    this.LastName = '';
-    this.ConfPassword = '';
-    this.Contact = '';
-    this.RoleId = 2;
   }
 }
