@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { SignupInterface } from '../../interfaces/user-action';
+import { ResSignupInterface, SignupInterface } from '../../interfaces/user-action';
+import { environment } from '../../environments/environment';
+import { UserserviceService } from '../../services/userservices/userservice.service';
 
 @Component({
   selector: 'app-signupprovider',
@@ -15,30 +17,24 @@ import { SignupInterface } from '../../interfaces/user-action';
   styleUrl: './signupprovider.component.css'
 })
 export class SignupproviderComponent {
-  signupObject: SignupInterface = {
-    Email: '',
-    Password: '',
-    FirstName: '',
-    LastName: '',
-    ConfPassword: '',
-    Contact: '',
-    RoleId: 3
-  }
+  signupObject: SignupInterface = { } as SignupInterface;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private toaster: ToastrService){
+  constructor(private http: HttpClient, private dialog: MatDialog, private toaster: ToastrService, private userService: UserserviceService){
+    this.signupObject.RoleId = 3;
   }
 
   onSubmit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/Signup', this.signupObject)
-      .subscribe((res: any) => {
+    this.userService.signup(this.signupObject)
+      .subscribe({
+        next: (res: ResSignupInterface) => {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
-          sessionStorage.setItem("role", res.roleId);
-          this.toaster.success("Welcome to Helperland......");
-      },
-    (error)=>{
-      this.toaster.error(error.error);
-    });
+          sessionStorage.setItem("role", res.roleId.toString());
+          this.toaster.success("Welcome to Helperland.......");
+        },
+        error:(error)=>{
+          this.toaster.error(error.error);
+        },
+      });
   }
 }

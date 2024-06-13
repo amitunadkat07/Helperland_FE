@@ -22,8 +22,11 @@
     </div>
     <div class="row mb-4">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating mb-4 password">
-        <input type="password" class="w-100" [(ngModel)]="loginObject.Password" name="Password" id="password" placeholder="Password" required />
-        <button type="button" (click)="pwdShowHide()"><img class="showImg" src="../assets/images/eye.svg" alt="Password Show/Hide"><img class="hideImg" src="../assets/images/hide-eye.png" alt="Password Show/Hide"></button>
+        <input [type]="password" class="w-100" [(ngModel)]="loginObject.Password" name="Password" id="password" placeholder="Password" required />
+        <button type="button" (click)="pwdShowHide()">
+          <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+          <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+        </button>
         <div *ngIf="loginForm.controls['Password'].invalid && (loginForm.controls['Password'].dirty || loginForm.controls['Password'].touched)" class="text-danger">
           <div *ngIf="loginForm.controls['Password'].errors?.['required']">Password is required</div>
         </div>

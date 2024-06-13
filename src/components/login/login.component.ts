@@ -4,36 +4,46 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { SignupcustomerComponent } from '../signupcustomer/signupcustomer.component';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ForgotpassComponent } from '../forgotpass/forgotpass.component';
-import { LoginInterface } from '../../interfaces/user-action';
+import { LoginInterface, ResLoginInterface } from '../../interfaces/user-action';
+import { environment } from '../../environments/environment';
+import { UserserviceService } from '../../services/userservices/userservice.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, MatDialogModule, NgIf],
+  imports: [FormsModule, HttpClientModule, MatDialogModule, NgIf, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  loginObject: LoginInterface = {
-    Email: '',
-    Password: ''
-  }
+  password: string;
+  show = false;
+  loginObject: LoginInterface = {} as LoginInterface;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService) {
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserserviceService) {
+    this.password = 'password';
+  }
   
+  pwdShowHide() {
+    if (this.password === 'password') {
+      this.password = 'text';
+      this.show = true;
+    } else {
+      this.password = 'password';
+      this.show = false;
+    }
   }
 
   onSubmit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/Login', this.loginObject)
+    this.userService.login(this.loginObject)
       .subscribe({
-        next: (res: any) => {
+        next: (res: ResLoginInterface) => {
           sessionStorage.setItem("Name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("Email", res.email);
-          sessionStorage.setItem("RoleId", res.roleId);
+          sessionStorage.setItem("RoleId", res.roleId.toString());
           sessionStorage.setItem("Token", res.token);
           this.toaster.success('Logged in Successfully...');
           this.router.navigate(["dashboard"]);
@@ -43,20 +53,6 @@ export class LoginComponent {
           this.toaster.error(error);
         },
       });
-  }
-
-  pwdShowHide(){
-    const x: HTMLInputElement | null = document.getElementById("password") as HTMLInputElement;
-    if (x?.type === "password") {
-        x.type = "text";
-        document.querySelectorAll(".showImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "none");
-        document.querySelectorAll(".hideImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "block");
-    } 
-    else if (x) {
-        x.type = "password";
-        document.querySelectorAll(".hideImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "none");
-        document.querySelectorAll(".showImg").forEach((Image: Element) => (Image as HTMLElement).style.display = "block");
-    }
   }
 
   openSignup(){

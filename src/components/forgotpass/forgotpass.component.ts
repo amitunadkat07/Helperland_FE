@@ -6,7 +6,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../login/login.component';
-import { ForgotPassInterface } from '../../interfaces/user-action';
+import { ForgotPassInterface, ResForgotPassInterface } from '../../interfaces/user-action';
+import { environment } from '../../environments/environment';
+import { UserserviceService } from '../../services/userservices/userservice.service';
 
 @Component({
   selector: 'app-forgotpass',
@@ -16,23 +18,22 @@ import { ForgotPassInterface } from '../../interfaces/user-action';
   styleUrl: './forgotpass.component.css'
 })
 export class ForgotpassComponent {
-  forgotpassObject: ForgotPassInterface = {
-    Email: ''
-  }
+  forgotpassObject: ForgotPassInterface = {} as ForgotPassInterface;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService) {
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserserviceService) {
   }
 
   onSubmit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/ForgotPass', this.forgotpassObject)
-      .subscribe((res: any) => {
-          this.toaster.success('Link to reset the password is sent...');
-          this.router.navigate(["home"]);
-      },
-    (error)=>{
-      this.toaster.error(error.error.errorMessage);
-    });
+    this.userService.forgotPass(this.forgotpassObject)
+      .subscribe({
+		    next: (res: ResForgotPassInterface) => {
+	          this.toaster.success('Link to reset the password is sent...');
+      	    this.router.navigate(["home"]);
+	      },
+        error: (error)=>{
+          this.toaster.error(error.error.errorMessage);
+        },
+      });
   }
 
   openLogin(){

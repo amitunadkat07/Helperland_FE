@@ -7,7 +7,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { SignupInterface } from '../../interfaces/user-action';
+import { ResSignupInterface, SignupInterface } from '../../interfaces/user-action';
+import { environment } from '../../environments/environment';
+import { UserserviceService } from '../../services/userservices/userservice.service';
 
 @Component({
   selector: 'app-signupcustomer',
@@ -17,32 +19,26 @@ import { SignupInterface } from '../../interfaces/user-action';
   styleUrl: './signupcustomer.component.css'
 })
 export class SignupcustomerComponent {
-  signupObject: SignupInterface = {
-    Email: '',
-    Password: '',
-    FirstName: '',
-    LastName: '',
-    ConfPassword: '',
-    Contact: '',
-    RoleId: 3
-  }
+  signupObject: SignupInterface = { } as SignupInterface;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService){
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserserviceService){
+    this.signupObject.RoleId = 2;
   }
 
   onSubmit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/Signup', this.signupObject)
-      .subscribe((res: any) => {
+    this.userService.signup(this.signupObject)
+      .subscribe({
+        next: (res: ResSignupInterface) => {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
-          sessionStorage.setItem("role", res.roleId);
+          sessionStorage.setItem("role", res.roleId.toString());
           this.toaster.success("Welcome to Helperland.......");
           this.router.navigate(['dashboard']);
-      },
-    (error)=>{
-      this.toaster.error(error.error);
-    });
+        },
+        error:(error)=>{
+          this.toaster.error(error.error);
+        },
+      });
   }
 
   openLogin(){

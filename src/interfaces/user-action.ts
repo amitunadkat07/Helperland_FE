@@ -19,5 +19,33 @@ export interface SignupInterface extends LoginInterface {
     LastName: string;
     ConfPassword: string;
     Contact: string;
-    RoleId: any;
+    RoleId: number;
+}
+
+export interface ErrorInterface {
+    isError: boolean;
+    errorMessage: string;
+}
+
+export interface ResLoginInterface extends ErrorInterface {
+    firstName: string;
+    lastName: string;
+    email: string;
+    roleId: number;
+    token: string;
+}
+
+export interface ResForgotPassInterface extends ErrorInterface {
+    email: string;
+}
+
+export interface ResSignupInterface {
+    firstName: string;
+    lastName: string;
+    email: string;
+    roleId: number;
+}
+
+export interface ResGetUserInterface extends ResSignupInterface {
+    resetKey: string;
 }

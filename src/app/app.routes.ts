@@ -3,6 +3,7 @@ import path from 'path';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { ResetpassComponent } from '../components/resetpass/resetpass.component';
+import { PagenotfoundComponent } from '../pages/pagenotfound/pagenotfound.component';
 
 export const routes: Routes = [
     {
@@ -23,5 +24,11 @@ export const routes: Routes = [
     {
         path: 'resetpassword',
         component: ResetpassComponent
+    },
+    //Wild Card Route for 404 request 
+    { 
+        path: '**',
+        pathMatch: 'full',  
+        component: PagenotfoundComponent 
     }
 ];

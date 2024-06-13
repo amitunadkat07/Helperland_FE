@@ -4,7 +4,10 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ResetPassInterface, UrlCheckInterface } from '../../interfaces/user-action';
+import { ResForgotPassInterface, ResetPassInterface, UrlCheckInterface } from '../../interfaces/user-action';
+import { environment } from '../../environments/environment';
+import { UserserviceService } from '../../services/userservices/userservice.service';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-resetpass',
@@ -14,16 +17,10 @@ import { ResetPassInterface, UrlCheckInterface } from '../../interfaces/user-act
   styleUrl: './resetpass.component.css'
 })
 export class ResetpassComponent {
-  urlObject: UrlCheckInterface ={
-    Email: '',
-    ResetKey: ''
-  }
-  resetObject: ResetPassInterface = {
-    Email: '',
-    Password: ''
-  }
+  urlObject: UrlCheckInterface = { } as UrlCheckInterface;
+  resetObject: ResetPassInterface = { } as ResetPassInterface;
 
-  constructor(private http: HttpClient, private routes: ActivatedRoute, private router: Router, private toaster: ToastrService) {
+  constructor(private http: HttpClient, private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserserviceService) {
 
     this.routes.queryParams.subscribe(params => {
       this.urlObject.ResetKey = params['t'];
@@ -33,26 +30,28 @@ export class ResetpassComponent {
   }
 
   ngOnInit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/ResetPassLink', this.urlObject)
-      .subscribe((res: any) => {
-        this.toaster.success('You can change your password, but please remember to follow security guidelines...');
-      },
-    (error)=>{
-      this.toaster.error(error.error.errorMessage);
-      this.router.navigate([""]);
-    });
+    this.userService.resetPassLink(this.urlObject)
+      .subscribe({
+        next: (res: ResForgotPassInterface) => {
+          this.toaster.success('You can change your password, but please remember to follow security guidelines...');
+        },
+        error: (error) => {
+          this.toaster.error(error.error.errorMessage);
+          this.router.navigate([""]);
+        }
+      });
   }
 
   onSubmit(){
-    this.http
-      .post('https://localhost:44374/api/Helperland/ResetPass', this.resetObject)
-      .subscribe((res: any) => {
+    this.userService.resetPass(this.resetObject)
+      .subscribe({
+        next: (res: ResForgotPassInterface) => {
           this.toaster.success('Password changed successfully...');
           this.router.navigate([""]);
-      },
-    (error)=>{
-      this.toaster.error(error.error.errorMessage);
-    });
+        },
+        error: (error)=>{
+          this.toaster.error(error.error.errorMessage);
+        },
+      });
   }
 }
