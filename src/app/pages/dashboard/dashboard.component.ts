@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environments/environment';
-import { UserserviceService } from '../../services/userservices/userservice.service';
-import { ResGetUserInterface } from '../../interfaces/user-action';
+import { UserService } from '../../services/userservices/user.service';
+import { IResGetUser } from '../../interfaces/user-action';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +12,13 @@ import { ResGetUserInterface } from '../../interfaces/user-action';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  constructor(private http: HttpClient, private router: Router, private toaster:ToastrService, private userService: UserserviceService) {
+  constructor( private router: Router, private toaster:ToastrService, private userService: UserService) {
     
   }
   ngOnInit(){
     this.userService.getUser()
       .subscribe({
-        next: (res: ResGetUserInterface) => {
+        next: (res: IResGetUser) => {
           this.toaster.success('Welcome to Helperland!!!!');
         },
         error:(error)=>{

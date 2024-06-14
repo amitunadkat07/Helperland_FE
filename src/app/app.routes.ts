@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
-import path from 'path';
-import { DashboardComponent } from '../pages/dashboard/dashboard.component';
-import { HomeComponent } from '../pages/home/home.component';
-import { ResetpassComponent } from '../components/resetpass/resetpass.component';
-import { PagenotfoundComponent } from '../pages/pagenotfound/pagenotfound.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PagenotfoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ResetpassComponent } from './pages/home/components/reset-pass/reset-pass.component';
 
 export const routes: Routes = [
     {

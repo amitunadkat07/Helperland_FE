@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from '../login/login.component';
+import { LoginComponent } from '../../pages/home/components/login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { SignupproviderComponent } from '../signupprovider/signupprovider.component';
+import { SignupproviderComponent } from '../../pages/home/components/signup-provider/signup-provider.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [LoginComponent, MatButtonModule],
+  imports: [MatButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

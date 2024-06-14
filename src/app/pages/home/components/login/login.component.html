@@ -13,7 +13,7 @@
     <div class="row mb-3">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating mb-4 email">
         <input type="email" class="w-100" cdkFocusInitial [(ngModel)]="loginObject.Email" name="Email" placeholder="Email" required email />
-        <button><img src="../assets/images/person-circle.svg" alt="person-circle"></button>
+        <button><img src="../../../../../assets/images/person-circle.svg" alt="person-circle"></button>
         <div *ngIf="loginForm.controls['Email'].invalid && (loginForm.controls['Email'].dirty || loginForm.controls['Email'].touched)" class="text-danger">
           <div *ngIf="loginForm.controls['Email'].errors?.['required']">Email is required</div>
           <div *ngIf="loginForm.controls['Email'].errors?.['email']">Invalid email format</div>

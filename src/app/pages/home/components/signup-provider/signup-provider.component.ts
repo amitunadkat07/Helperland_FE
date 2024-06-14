@@ -1,32 +1,31 @@
 import { NgIf } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ResSignupInterface, SignupInterface } from '../../interfaces/user-action';
-import { environment } from '../../environments/environment';
-import { UserserviceService } from '../../services/userservices/userservice.service';
+import { IResSignup, ISignup } from '../../../../interfaces/user-action';
+import { UserService } from '../../../../services/userservices/user.service';
 
 @Component({
   selector: 'app-signupprovider',
   standalone: true,
   imports: [MatCheckboxModule, MatDialogModule, FormsModule, HttpClientModule, NgIf],
-  templateUrl: './signupprovider.component.html',
-  styleUrl: './signupprovider.component.css'
+  templateUrl: './signup-provider.component.html',
+  styleUrl: './signup-provider.component.css'
 })
 export class SignupproviderComponent {
-  signupObject: SignupInterface = { } as SignupInterface;
+  signupObject: ISignup = { } as ISignup;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private toaster: ToastrService, private userService: UserserviceService){
+  constructor( private toaster: ToastrService, private userService: UserService){
     this.signupObject.RoleId = 3;
   }
 
   onSubmit(){
     this.userService.signup(this.signupObject)
       .subscribe({
-        next: (res: ResSignupInterface) => {
+        next: (res: IResSignup) => {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
           sessionStorage.setItem("role", res.roleId.toString());

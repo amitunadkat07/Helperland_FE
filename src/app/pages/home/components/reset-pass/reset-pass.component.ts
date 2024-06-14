@@ -1,26 +1,24 @@
 import { NgIf } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ResForgotPassInterface, ResetPassInterface, UrlCheckInterface } from '../../interfaces/user-action';
-import { environment } from '../../environments/environment';
-import { UserserviceService } from '../../services/userservices/userservice.service';
-import { error } from 'node:console';
+import { UserService } from '../../../../services/userservices/user.service';
+import { IResForgotPass, IResetPass, IUrlCheck } from '../../../../interfaces/user-action';
 
 @Component({
   selector: 'app-resetpass',
   standalone: true,
   imports: [FormsModule, NgIf, HttpClientModule],
-  templateUrl: './resetpass.component.html',
-  styleUrl: './resetpass.component.css'
+  templateUrl: './reset-pass.component.html',
+  styleUrl: './reset-pass.component.css'
 })
 export class ResetpassComponent {
-  urlObject: UrlCheckInterface = { } as UrlCheckInterface;
-  resetObject: ResetPassInterface = { } as ResetPassInterface;
+  urlObject: IUrlCheck = { } as IUrlCheck;
+  resetObject: IResetPass = { } as IResetPass;
 
-  constructor(private http: HttpClient, private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserserviceService) {
+  constructor( private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
 
     this.routes.queryParams.subscribe(params => {
       this.urlObject.ResetKey = params['t'];
@@ -32,7 +30,7 @@ export class ResetpassComponent {
   ngOnInit(){
     this.userService.resetPassLink(this.urlObject)
       .subscribe({
-        next: (res: ResForgotPassInterface) => {
+        next: (res: IResForgotPass) => {
           this.toaster.success('You can change your password, but please remember to follow security guidelines...');
         },
         error: (error) => {
@@ -45,7 +43,7 @@ export class ResetpassComponent {
   onSubmit(){
     this.userService.resetPass(this.resetObject)
       .subscribe({
-        next: (res: ResForgotPassInterface) => {
+        next: (res: IResForgotPass) => {
           this.toaster.success('Password changed successfully...');
           this.router.navigate([""]);
         },
