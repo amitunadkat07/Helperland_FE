@@ -9,31 +9,24 @@ import { Router } from '@angular/router';
 import { ForgotpassComponent } from '../forgot-pass/forgot-pass.component';
 import { ILogin, IResLogin } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, MatDialogModule, NgIf, CommonModule],
+  imports: [FormsModule, HttpClientModule, MatDialogModule, NgIf, CommonModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  password: string;
   show = false;
-  loginObject: ILogin = {} as ILogin;
+  loginObject: ILogin =  {} as ILogin;
 
   constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService) {
-    this.password = 'password';
   }
   
   pwdShowHide() {
-    if (this.password === 'password') {
-      this.password = 'text';
-      this.show = true;
-    } else {
-      this.password = 'password';
-      this.show = false;
-    }
+    this.show = !this.show;
   }
 
   onSubmit(){

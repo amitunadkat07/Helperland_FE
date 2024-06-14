@@ -9,5 +9,5 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiInterceptor } from './interceptor/api/api.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideToastr(), provideHttpClient(withInterceptors([apiInterceptor]))]
+  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideToastr(), provideHttpClient(withInterceptors([apiInterceptor])), provideAnimationsAsync()]
 };
