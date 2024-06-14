@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
+export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const excludedUrls = [
     'https://localhost:44374/api/Helperland/Login',
     'https://localhost:44374/api/Helperland/Signup',

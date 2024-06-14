@@ -19,11 +19,11 @@ export class DashboardComponent {
     this.userService.getUser()
       .subscribe({
         next: (res: IResGetUser) => {
-          this.toaster.success('Welcome to Helperland!!!!');
+          this.toaster.success('Welcome to Helperland.');
         },
         error:(error)=>{
           this.toaster.error(error);
-          this.router.navigate([""]);
+          this.router.navigate(["home"]);
         },
       });
   }

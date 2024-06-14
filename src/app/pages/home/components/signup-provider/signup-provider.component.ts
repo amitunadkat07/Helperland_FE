@@ -16,7 +16,7 @@ import { UserService } from '../../../../services/userservices/user.service';
   styleUrl: './signup-provider.component.css'
 })
 export class SignupproviderComponent {
-  signupObject: ISignup = { } as ISignup;
+  signupObject!: ISignup;
 
   constructor( private toaster: ToastrService, private userService: UserService){
     this.signupObject.RoleId = 3;
@@ -29,7 +29,7 @@ export class SignupproviderComponent {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
           sessionStorage.setItem("role", res.roleId.toString());
-          this.toaster.success("Welcome to Helperland.......");
+          this.toaster.success("Welcome to Helperland.");
         },
         error:(error)=>{
           this.toaster.error(error.error);

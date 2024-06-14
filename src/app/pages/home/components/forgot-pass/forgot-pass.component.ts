@@ -17,16 +17,16 @@ import { UserService } from '../../../../services/userservices/user.service';
   styleUrl: './forgot-pass.component.css'
 })
 export class ForgotpassComponent {
-  forgotpassObject: IForgotPass = {} as IForgotPass;
+  forgotPassObject!: IForgotPass;
 
   constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService) {
   }
 
   onSubmit(){
-    this.userService.forgotPass(this.forgotpassObject)
+    this.userService.forgotPass(this.forgotPassObject)
       .subscribe({
 		    next: (res: IResForgotPass) => {
-	          this.toaster.success('Link to reset the password is sent...');
+	          this.toaster.success('Link to reset the password is sent.');
       	    this.router.navigate(["home"]);
 	      },
         error: (error)=>{

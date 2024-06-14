@@ -15,8 +15,8 @@ import { IResForgotPass, IResetPass, IUrlCheck } from '../../../../interfaces/us
   styleUrl: './reset-pass.component.css'
 })
 export class ResetpassComponent {
-  urlObject: IUrlCheck = { } as IUrlCheck;
-  resetObject: IResetPass = { } as IResetPass;
+  urlObject!: IUrlCheck;
+  resetObject!: IResetPass;
 
   constructor( private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
 
@@ -31,11 +31,11 @@ export class ResetpassComponent {
     this.userService.resetPassLink(this.urlObject)
       .subscribe({
         next: (res: IResForgotPass) => {
-          this.toaster.success('You can change your password, but please remember to follow security guidelines...');
+          this.toaster.success('You can change your password, but please remember to follow security guidelines.');
         },
         error: (error) => {
           this.toaster.error(error.error.errorMessage);
-          this.router.navigate([""]);
+          this.router.navigate(["home"]);
         }
       });
   }
@@ -44,8 +44,8 @@ export class ResetpassComponent {
     this.userService.resetPass(this.resetObject)
       .subscribe({
         next: (res: IResForgotPass) => {
-          this.toaster.success('Password changed successfully...');
-          this.router.navigate([""]);
+          this.toaster.success('Password changed successfully.');
+          this.router.navigate(["home"]);
         },
         error: (error)=>{
           this.toaster.error(error.error.errorMessage);

@@ -12,7 +12,7 @@
     <form #forgotpassForm="ngForm" (submit)="onSubmit()">
       <div class="row mb-3">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating mb-4 email">
-          <input type="email" class="w-100" cdkFocusInitial [(ngModel)]="forgotpassObject.Email" name="Email" placeholder="Email" required email />
+          <input type="email" class="w-100" cdkFocusInitial [(ngModel)]="forgotPassObject.Email" name="Email" placeholder="Email" required email />
           <div *ngIf="forgotpassForm.controls['Email'].invalid && (forgotpassForm.controls['Email'].dirty || forgotpassForm.controls['Email'].touched)" class="text-danger">
             <div *ngIf="forgotpassForm.controls['Email'].errors?.['required']">Email is required</div>
             <div *ngIf="forgotpassForm.controls['Email'].errors?.['email']">Invalid email format</div>

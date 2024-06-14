@@ -18,7 +18,7 @@ import { UserService } from '../../../../services/userservices/user.service';
   styleUrl: './signup-customer.component.css'
 })
 export class SignupcustomerComponent {
-  signupObject: ISignup = { } as ISignup;
+  signupObject!: ISignup;
 
   constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService){
     this.signupObject.RoleId = 2;
@@ -31,7 +31,7 @@ export class SignupcustomerComponent {
           sessionStorage.setItem("name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("email", res.email);
           sessionStorage.setItem("role", res.roleId.toString());
-          this.toaster.success("Welcome to Helperland.......");
+          this.toaster.success("Welcome to Helperland.");
           this.router.navigate(['dashboard']);
         },
         error:(error)=>{
