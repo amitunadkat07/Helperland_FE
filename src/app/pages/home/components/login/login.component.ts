@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { SignupcustomerComponent } from '../signup-customer/signup-customer.component';
@@ -14,15 +14,28 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, MatDialogModule, NgIf, CommonModule, MatIconModule],
+  imports: [ReactiveFormsModule, HttpClientModule, MatDialogModule, NgIf, CommonModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   show = false;
-  loginObject: ILogin =  {} as ILogin;
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+  });
 
   constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService) {
+  }
+
+  getErrorMessage(controlName: string) {
+    const control = this.loginForm.get(controlName);
+    if (control.hasError('required')) {
+      return `This field is required`;
+    } else if (control.hasError('email')) {
+      return `Invalid email format`;
+    }
+    return '';
   }
   
   pwdShowHide() {
@@ -30,14 +43,18 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    this.userService.login(this.loginObject)
+    const loginData: ILogin = {
+      Email: this.loginForm.get('email').value,
+      Password: this.loginForm.get('password').value
+    };
+      this.userService.login(loginData)
       .subscribe({
         next: (res: IResLogin) => {
           sessionStorage.setItem("Name", res.firstName + " " + res.lastName);
           sessionStorage.setItem("Email", res.email);
           sessionStorage.setItem("RoleId", res.roleId.toString());
           sessionStorage.setItem("Token", res.token);
-          this.toaster.success('Logged in Successfully...');
+          this.toaster.success('Logged in Successfully.');
           this.router.navigate(["dashboard"]);
         },
         error: (error) => {

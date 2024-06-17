@@ -19,7 +19,6 @@ export class ResetpassComponent {
   resetObject!: IResetPass;
 
   constructor( private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
-
     this.routes.queryParams.subscribe(params => {
       this.urlObject.ResetKey = params['t'];
       this.urlObject.Email = params['e'];

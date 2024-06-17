@@ -1,6 +1,6 @@
 <form #resetpassForm="ngForm" class="container d-flex flex-column align-items-center mt-5" (submit)="onSubmit()">
     <div class="row mb-4 mt-5">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+        <div class="col-12 form-floating">
             <input type="password" class="w-100" name="Password" cdkFocusInitial [(ngModel)]="resetObject.Password" placeholder="Password" ngModel required />
             <div *ngIf="resetpassForm.controls['Password'].invalid && (resetpassForm.controls['Password'].dirty || resetpassForm.controls['Password'].touched)" class="text-danger">
                 Password is required
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row mb-4">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
+        <div class="col-12 form-floating">
             <input type="password" class="w-100" name="Confpassword" placeholder="Confirm Passsword" ngModel required />
             <div *ngIf="resetpassForm.controls['Confpassword'].invalid && (resetpassForm.controls['Confpassword'].dirty || resetpassForm.controls['Confpassword'].touched)" class="text-danger">
                 Confirm Password is required
@@ -19,8 +19,8 @@
         </div>
     </div>
     <input type="hidden" name="Email" [(ngModel)]="resetObject.Email">
-    <button type="submit" class="btn btn-info rounded-pill text-white text-center fs-3 col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 mb-5 py-3 submitBtn" mat-button mat-dialog-close [disabled]="resetpassForm.invalid">Send</button>
-    <p class="text-center">
-        <a class="login" mat-button mat-dialog-close>Login Now</a>
-    </p>
+    <button type="submit" class="btn btn-info rounded-pill text-white text-center fs-3 col-2 mb-5 py-3 submitBtn" mat-button mat-dialog-close [disabled]="resetpassForm.invalid">Send</button>
 </form>
+<p class="text-center">
+    <a class="login" mat-button mat-dialog-close>Login Now</a>
+</p>

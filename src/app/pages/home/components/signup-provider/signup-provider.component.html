@@ -1,59 +1,61 @@
 <h1 class="text-center" mat-dialog-title>Register as Helper!</h1>
 <mat-dialog-content>
-    <form #signupForm="ngForm" (submit)="onSubmit()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="row mb-4">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-            <input type="text" [(ngModel)]="signupObject.FirstName" class="w-100" name="Firstname" placeholder="Firstname" required />
-            <div *ngIf="signupForm.controls['Firstname'].invalid && (signupForm.controls['Firstname'].dirty || signupForm.controls['Firstname'].touched)" class="text-danger">
-              First Name is required
-            </div>
+          <div class="col-12 form-floating">
+            <input type="text" class="w-100" formControlName="firstName" placeholder="First Name" />
+            <span *ngIf="signupForm.get('firstName').invalid && (signupForm.get('firstName').dirty || signupForm.get('firstName').touched)" class="text-danger">
+              {{ getErrorMessage('firstName') }}
+            </span>
           </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-                <input type="text" [(ngModel)]="signupObject.LastName" class="w-100" name="Lastname" placeholder="Surname" required />
-                <div *ngIf="signupForm.controls['Lastname'].invalid && (signupForm.controls['Lastname'].dirty || signupForm.controls['Lastname'].touched)" class="text-danger">
-                  Last Name is required
-                </div>
+            <div class="col-12 form-floating">
+              <input type="text" class="w-100" formControlName="lastName" placeholder="Last Name" />
+              <span *ngIf="signupForm.get('lastName').invalid && (signupForm.get('lastName').dirty || signupForm.get('lastName').touched)" class="text-danger">
+                {{ getErrorMessage('lastName') }}
+              </span>
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-                <input type="email" [(ngModel)]="signupObject.Email" class="w-100" name="Email" placeholder="Email Address" required />
-                <div *ngIf="signupForm.controls['Email'].invalid && (signupForm.controls['Email'].dirty || signupForm.controls['Email'].touched)" class="text-danger">
-                  <div *ngIf="signupForm.controls['Email'].errors?.['required']">Email is required</div>
-                  <div *ngIf="signupForm.controls['Email'].errors?.['email']">Invalid email format</div>
-                </div>
+            <div class="col-12 form-floating">
+              <input type="email" class="w-100" formControlName="email" placeholder="Email Address" />
+              <span *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)" class="text-danger">
+                {{ getErrorMessage('email') }}
+              </span>
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-              <input type="text" [(ngModel)]="signupObject.Contact" class="w-100" name="Mobile" placeholder="Phone Number" required />
-              <div *ngIf="signupForm.controls['Mobile'].invalid && (signupForm.controls['Mobile'].dirty || signupForm.controls['Mobile'].touched)" class="text-danger">
-                Phone Number is required
-              </div>
+            <div class="col-12 form-floating">
+              <input type="text" class="w-100" formControlName="contact" placeholder="Mobile Number" />
+              <span *ngIf="signupForm.get('contact').invalid && (signupForm.get('contact').dirty || signupForm.get('contact').touched)" class="text-danger">
+                {{ getErrorMessage('contact') }}
+              </span>
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-                <input type="password" [(ngModel)]="signupObject.Password" class="w-100" name="Password" placeholder="Password" required />
-                <div *ngIf="signupForm.controls['Password'].invalid && (signupForm.controls['Password'].dirty || signupForm.controls['Password'].touched)" class="text-danger">
-                  Password is required
-                </div>
+            <div class="col-12 form-floating">
+              <input type="password" class="w-100" formControlName="password" placeholder="Password" />
+              <span *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)" class="text-danger">
+                {{ getErrorMessage('password') }}
+              </span>
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-floating">
-                <input type="password" [(ngModel)]="signupObject.ConfPassword" class="w-100" name="Confpassword" placeholder="Confirm Passsword" required />
-                <div *ngIf="signupForm.controls['Confpassword'].invalid && (signupForm.controls['Confpassword'].dirty || signupForm.controls['Confpassword'].touched)" class="text-danger">
-                  Confirm Password is required
-                </div>
+            <div class="col-12 form-floating">
+              <input type="password" class="w-100" formControlName="confPassword" placeholder="Confirm Passsword" />
+              <span *ngIf="signupForm.get('confPassword').invalid && (signupForm.get('confPassword').dirty || signupForm.get('confPassword').touched)" class="text-danger">
+                {{ getErrorMessage('confPassword') }}
+              </span>
+              <span *ngIf="signupForm.hasError('passwordsMatch')" class="text-danger">
+                Passwords do not match
+              </span>
             </div>
         </div>
-        <input type="hidden" class="w-100" value="signupObject.RoleId" [(ngModel)]="signupObject.RoleId" name="RoleId" placeholder="Role Id" />
-        <mat-checkbox required>I accept terms and conditions & privacy policy .</mat-checkbox>
+        <input type="hidden" class="w-100" formControlName="roleId" placeholder="Role Id" />
+        <mat-checkbox formControlName="privacyPolicy">I accept terms and conditions & privacy policy .</mat-checkbox>
         <div class="d-flex justify-content-center mt-5">
-            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 mb-5 py-3 submitBtn" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
         </div>
     </form>
 </mat-dialog-content>

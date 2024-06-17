@@ -11,7 +11,7 @@ export interface IUrlCheck extends IForgotPass {
 }
 
 export interface IResetPass extends ILogin {
-    
+    ConfPassword: string;
 }
 
 export interface ISignup extends ILogin {
@@ -44,6 +44,7 @@ export interface IResSignup {
     lastName: string;
     email: string;
     roleId: number;
+    token: string;
 }
 
 export interface IResGetUser extends IResSignup {

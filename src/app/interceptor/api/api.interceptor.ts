@@ -1,20 +1,28 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const excludedUrls = [
-    'https://localhost:44374/api/Helperland/Login',
-    'https://localhost:44374/api/Helperland/Signup',
-    'https://localhost:44374/api/Helperland/ForgotPass',
-    'https://localhost:44374/api/Helperland/ResetPassLink',
-    'https://localhost:44374/api/Helperland/ResetPass'
+    'Helperland/Login',
+    'Helperland/Signup',
+    'Helperland/ForgotPass',
+    'Helperland/ResetPassLink',
+    'Helperland/ResetPass'
   ];
   if (!excludedUrls.includes(req.url)) {
     const authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${sessionStorage.getItem("Token")}`
-      }
+      },
+      url: `${environment.baseURL}` + req.url
     });
     return next(authReq);
   }
-  return next(req);
+  else {
+    const authReq = req.clone({
+      url: `${environment.baseURL}` + req.url
+    });
+    return next(authReq);
+  }
+  
 };
