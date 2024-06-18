@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PagenotfoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ResetpassComponent } from './pages/home/components/reset-pass/reset-pass.component';
@@ -7,8 +6,7 @@ import { ResetpassComponent } from './pages/home/components/reset-pass/reset-pas
 export const routes: Routes = [
     {
         path: 'dashboard',
-        component: DashboardComponent,
-        pathMatch: 'full'
+        loadChildren: () => import('./pages/dashboard/dashboard.routes').then(m => m.dashboardRoutes)
     },
     {
         path: '',

@@ -30,7 +30,7 @@ export class UserService {
     return this.httpClient.post<IResSignup>('Helperland/Signup', ISignup)
   }
 
-  getUser(): Observable<IResGetUser> {
-    return this.httpClient.get<IResGetUser>('Helperland/GetUsers')
+  getUser(): Observable<IResGetUser[]> {
+    return this.httpClient.get<IResGetUser[]>('Helperland/GetUsers')
   }
 }

@@ -1,0 +1,19 @@
+.dashboard h1{
+    font-size: 5rem !important;
+}
+
+.leftSidebar{
+    color: white;
+}
+
+.leftSidebar li{
+    list-style-type: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background: #1f7b8d;
+}
+
+.blueBtn{
+    background-color: #006a80;
+    color: white;
+}

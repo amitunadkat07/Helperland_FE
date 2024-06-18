@@ -1,30 +1,26 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../../services/userservices/user.service';
-import { IResGetUser } from '../../interfaces/user-action';
+import { Router, RouterOutlet } from '@angular/router';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [HeaderComponent, MatDividerModule, RouterOutlet],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  constructor( private router: Router, private toaster:ToastrService, private userService: UserService) {
+  name: string;
+
+  constructor( private router: Router) {
     
   }
   ngOnInit(){
-    this.userService.getUser()
-      .subscribe({
-        next: (res: IResGetUser) => {
-          this.toaster.success('Welcome to Helperland.');
-        },
-        error:(error)=>{
-          this.toaster.error(error);
-          this.router.navigate(["home"]);
-        },
-      });
+      this.name = sessionStorage.getItem('Name');
+  }
+
+  goTo(url: string){
+    this.router.navigateByUrl(url);
   }
 }

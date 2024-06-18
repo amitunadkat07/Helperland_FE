@@ -54,6 +54,7 @@ export class LoginComponent {
           sessionStorage.setItem("Email", res.email);
           sessionStorage.setItem("RoleId", res.roleId.toString());
           sessionStorage.setItem("Token", res.token);
+          sessionStorage.setItem("IsLoggedIn", "true");
           this.toaster.success('Logged in Successfully.');
           this.router.navigate(["dashboard"]);
         },

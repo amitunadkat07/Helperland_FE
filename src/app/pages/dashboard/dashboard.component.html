@@ -1,1 +1,26 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+    <app-header />
+    <div class="d-flex align-items-center justify-content-center py-5">
+        <h1>Welcome, {{name}}</h1>
+    </div>
+    <div class="d-flex align-items-center mainContent">
+        <div class="ms-4 leftSidebar">
+            <ul>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/data')">Dashboard</button></li>
+                <mat-divider></mat-divider>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/servicehistory')">Service History</button></li>
+                <mat-divider></mat-divider>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/serviceschedule')">Service Schedule</button></li>
+                <mat-divider></mat-divider>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/favourites')">Favorite Pros</button></li>
+                <mat-divider></mat-divider>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/invoices')">Invoices</button></li>
+                <mat-divider></mat-divider>
+                <li class="p-3 pe-5"><button class="border-0 bg-transparent" (click)="goTo('dashboard/notifications')">Notifications</button></li>
+            </ul>
+        </div>
+        <div class="flex-grow-1 rightSidebar">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

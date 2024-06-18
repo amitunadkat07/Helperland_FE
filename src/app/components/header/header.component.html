@@ -2,8 +2,8 @@
     <div class="logoimg">
         <img src="../../../assets/images/logo1.png" alt="Helperland">
     </div>
-    <div class="mt-5 navbarlinks">
-        <div class="d-flex mt-2 justify-content-end innerlinks">
+    <div class="mt-4 navbarlinks">
+        <div class="d-flex mt-3 justify-content-end innerlinks">
             <div class="mx-4">
                 <button class="btn btn-lg">Book Now</button>
             </div>
@@ -19,12 +19,38 @@
             <div class="mx-4 pt-2">
                 <a href="#" class="fs-3 ">Contact</a>
             </div>
-            <div class="mx-4">
-                <button class="btn btn-lg" mat-button (click)="openLogin()">Login</button>
-            </div>
-            <div class="mx-4">
-                <button class="btn btn-lg" mat-button (click)="openSignup()">Become a Helper!</button>
-            </div>
+            @if (loggedIn == "true") {
+                <div class="mx-4 pt-2 notify">
+                    <i class="fa-regular fa-bell fa-2xl" style="color: #ffffff;"></i>
+                </div>
+                <div class="mx-4 pt-2 profile">
+                    <i class="fa-regular fa-circle-user fa-2xl" style="color: #ffffff;" mat-button (click)="openProfile()"></i>
+                </div>
+                
+            } @else {
+                <div class="mx-4">
+                    <button class="btn btn-lg" mat-button (click)="openLogin()">Login</button>
+                </div>
+                <div class="mx-4">
+                    <button class="btn btn-lg" mat-button (click)="openSignup()">Become a Helper!</button>
+                </div>
+            }
         </div>
     </div>
 </div>
+<ng-container *ngIf="visibleProfile">
+    <div class="shadow-sm p-4 profilePopup">
+      <h3>Welcome, {{name}}</h3>
+      <ul>
+        <li>
+            <a href="#">My Dashboard</a>
+        </li>
+        <li>
+            <a href="#">My Settings</a>
+        </li>
+        <li>
+            <a href="#" (click)="logOut()">Logout</a>
+        </li>
+      </ul>
+    </div>
+</ng-container>
