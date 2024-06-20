@@ -16,9 +16,10 @@ export class DashboardDataComponent {
   elements: IResGetUser[];
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'actions'];
   datasource: MatTableDataSource<IResGetUser>;
+  loggedIn: string;
 
   constructor( private userService: UserService, private toaster: ToastrService, private router: Router ) {
-    
+    this.loggedIn = sessionStorage.getItem('IsLoggedIn');
   }
 
   ngOnInit(){
@@ -29,9 +30,14 @@ export class DashboardDataComponent {
           this.datasource = new MatTableDataSource<IResGetUser>(this.elements);
         },
         error:(error)=>{
-          console.log(error);
-          this.toaster.error("Error Loading the dashboard.");
-          sessionStorage.clear();
+          if (this.loggedIn == "true") {
+            console.log(error);
+            this.toaster.error("Error Loading the dashboard.");
+            sessionStorage.clear();
+          }
+          else {
+            this.toaster.error("Please login first.");
+          }
           this.router.navigate(["home"]);
         },
       });

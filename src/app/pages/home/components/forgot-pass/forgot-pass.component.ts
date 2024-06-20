@@ -49,7 +49,6 @@ export class ForgotpassComponent {
             this.toaster.error("Internal Server Error.");
           }
           else{
-            console.log(error.error.errorMessage);
             this.toaster.error(error.error.errorMessage);
           }
         },

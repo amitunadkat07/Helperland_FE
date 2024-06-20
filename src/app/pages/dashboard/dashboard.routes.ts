@@ -6,7 +6,7 @@ export const dashboardRoutes: Routes = [
         loadComponent: () => import('./dashboard.component').then(m => m.DashboardComponent),
         children: [
             {
-                path: 'data',
+                path: 'home',
                 loadComponent: () => import('./components/dashboard-data/dashboard-data.component').then(m => m.DashboardDataComponent)
             },
             {
@@ -31,7 +31,7 @@ export const dashboardRoutes: Routes = [
             },
             {
                 path: '',
-                redirectTo: 'data',
+                redirectTo: 'home',
                 pathMatch: 'full'
             }
         ]

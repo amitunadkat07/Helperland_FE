@@ -8,15 +8,18 @@ import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IResSignup, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-signupprovider',
   standalone: true,
-  imports: [MatCheckboxModule, MatDialogModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule],
+  imports: [MatCheckboxModule, MatDialogModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatIconModule],
   templateUrl: './signup-provider.component.html',
   styleUrl: './signup-provider.component.css'
 })
 export class SignupproviderComponent {
+  contactTooltip: boolean = false;
+  passwordTooltip: boolean = false;
   signupForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -41,17 +44,31 @@ export class SignupproviderComponent {
 
   getErrorMessage(controlName: string) {
     const control = this.signupForm.get(controlName);
-    if (control.hasError('required'))
-      return `${controlName} is required`;
-    else if (control.hasError('email'))
-      return `Invalid email format`;
     if (controlName == 'contact') {
-      if (control.hasError('pattern'))
-      return 'Invalid contact';
+      if (control.hasError('required')) {
+        this.contactTooltip = false;
+        return `${controlName} is required`;
+      }
+      else if (control.hasError('pattern')) {
+        this.contactTooltip = true;
+        return 'Invalid contact';
+      }
     }  
-    if (controlName == 'password') {
-      if (control.hasError('pattern'))
+    else if (controlName == 'password') {
+      if (control.hasError('required')) {
+        this.passwordTooltip = false;
+        return `${controlName} is required`;
+      }
+      else if (control.hasError('pattern')) {
+        this.passwordTooltip = true;
         return 'Invalid password';
+      } 
+    }
+    else {
+      if (control.hasError('required'))
+        return `${controlName} is required`;
+      else if (control.hasError('email'))
+        return `Invalid email format`;
     }
     return '';
   }

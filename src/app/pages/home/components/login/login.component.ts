@@ -63,8 +63,8 @@ export class LoginComponent {
             this.toaster.error("Internal Server Error.");
           }
           else{
-            console.log(error);
-            this.toaster.error(error);
+            console.log(error.error.errorMessage);
+            this.toaster.error(error.error.errorMessage);
           }
         },
       });

@@ -6,22 +6,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../../services/userservices/user.service';
 import { IResForgotPass, IResetPass, IUrlCheck } from '../../../../interfaces/user-action';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-resetpass',
   standalone: true,
-  imports: [FormsModule, NgIf, HttpClientModule],
+  imports: [FormsModule, NgIf, HttpClientModule, MatIconModule, MatTooltipModule],
   templateUrl: './reset-pass.component.html',
   styleUrl: './reset-pass.component.css'
 })
 export class ResetpassComponent {
-  urlObject!: IUrlCheck;
-  resetObject!: IResetPass;
+  urlObject: IUrlCheck;
+  resetObject: IResetPass = {} as IResetPass;
 
-  constructor( private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
+  constructor(private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
     this.routes.queryParams.subscribe(params => {
-      this.urlObject.ResetKey = params['t'];
-      this.urlObject.Email = params['e'];
+      this.urlObject = {
+        ResetKey: params['t'],
+        Email: params['e']
+      }
       this.resetObject.Email = params['e'];
     });
   }
@@ -39,8 +44,8 @@ export class ResetpassComponent {
           }
           else{
             this.toaster.error(error.error.errorMessage);
-            this.router.navigate(["home"]);
           }
+          this.router.navigate(["home"]);
         }
       });
   }
@@ -61,7 +66,6 @@ export class ResetpassComponent {
             console.log(error.error.errorMessage);
             this.toaster.error(error.error.errorMessage);
           }
-          
         },
       });
   }

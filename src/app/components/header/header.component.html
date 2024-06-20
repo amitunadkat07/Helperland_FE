@@ -26,7 +26,7 @@
                     </button>
                 </div>
                 <div class="mx-4 profile">
-                    <button class="sideBtn" (click)="openProfile()">
+                    <button class="sideBtn" [matMenuTriggerFor]="menu">
                         <mat-icon class="text-white mt-2 fs-2">account_circle</mat-icon>
                     </button>
                 </div>
@@ -41,46 +41,52 @@
         </div>
     </div>
     <div class="d-block d-lg-none mt-4 w-100">
-        <button type="button" class="position-absolute end-0 me-5 bg-transparent border-0 pe-auto py-2 mt-3" [matMenuTriggerFor]="menu"><i class="fa-solid fa-bars fa-2xl" style="color: #ffffff;"></i></button>
+        <button type="button" class="position-absolute end-0 me-5 bg-transparent border-0 pe-auto py-2 mt-3" [matMenuTriggerFor]="menuIcon"><i class="fa-solid fa-bars fa-2xl" style="color: #ffffff;"></i></button>
     </div>
 </div>
+<mat-menu #menu="matMenu" class="profileMenu">
+    <h3 class="text-white" mat-menu-item>Welcome, {{name}}</h3>
+    <a class="text-white" href="#" mat-menu-item>My Dashboard</a>
+    <a class="text-white" href="#" mat-menu-item>My Settings</a>
+    <a class="text-white" (click)="logOut()" mat-menu-item>Logout</a>
+</mat-menu>
 <ng-container *ngIf="visibleProfile">
-    <div class="shadow-sm p-4 profilePopup">
+    <div class="shadow-sm text-white p-4 profilePopup">
       <h3>Welcome, {{name}}</h3>
       <ul>
         <li>
-            <a href="#">My Dashboard</a>
+            <a class="text-white" href="#">My Dashboard</a>
         </li>
         <li>
-            <a href="#">My Settings</a>
+            <a class="text-white" href="#">My Settings</a>
         </li>
         <li>
-            <a href="#" (click)="logOut()">Logout</a>
+            <a class="text-white" href="#" (click)="logOut()">Logout</a>
         </li>
       </ul>
     </div>
 </ng-container>
-    <mat-menu #menu="matMenu" class="profileMenu">
-        <button class="text-white" mat-menu-item>Book Now</button>
-        <a href="#" class="fs-3 text-white" mat-menu-item>Prices & Services</a>
-        <a href="#" class="fs-3 text-white" mat-menu-item>Warranty</a>
-        <a href="#" class="fs-3 text-white" mat-menu-item>Blog</a>
-        <a href="#" class="fs-3 text-white" mat-menu-item>Contact</a>
-        @if (loggedIn == "true") {
-            <div mat-menu-item>
-                <button class="menuBtn">
-                    <mat-icon class="text-white py-2 fs-2">notifications</mat-icon>
-                    <span>Notifications</span>
-                </button>
-            </div>
-            <div mat-menu-item>
-                <button class="menuBtn" (click)="openProfile()">
-                    <mat-icon class="text-white py-2 fs-2">account_circle</mat-icon>
-                    <span>Profile</span>
-                </button>
-            </div>
-        } @else {
-            <button class="text-white" (click)="openLogin()" mat-menu-item>Login</button>
-            <button class="text-white" (click)="openSignup()" mat-menu-item>Become a Helper!</button>
-        }
-    </mat-menu>
+<mat-menu #menuIcon="matMenu" class="profileMenu">
+    <button class="text-white" mat-menu-item>Book Now</button>
+    <a href="#" class="fs-3 text-white" mat-menu-item>Prices & Services</a>
+    <a href="#" class="fs-3 text-white" mat-menu-item>Warranty</a>
+    <a href="#" class="fs-3 text-white" mat-menu-item>Blog</a>
+    <a href="#" class="fs-3 text-white" mat-menu-item>Contact</a>
+    @if (loggedIn == "true") {
+        <div mat-menu-item>
+            <button class="menuBtn">
+                <mat-icon class="text-white py-2 fs-2">notifications</mat-icon>
+                <span>Notifications</span>
+            </button>
+        </div>
+        <div mat-menu-item>
+            <button class="menuBtn" [matMenuTriggerFor]="menu">
+                <mat-icon class="text-white py-2 fs-2">account_circle</mat-icon>
+                <span>Profile</span>
+            </button>
+        </div>
+    } @else {
+        <button class="text-white" (click)="openLogin()" mat-menu-item>Login</button>
+        <button class="text-white" (click)="openSignup()" mat-menu-item>Become a Helper!</button>
+    }
+</mat-menu>

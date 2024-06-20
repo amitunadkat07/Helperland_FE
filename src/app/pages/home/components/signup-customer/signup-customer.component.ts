@@ -9,15 +9,19 @@ import { NgIf } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { IResSignup, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-signupcustomer',
   standalone: true,
-  imports: [MatDialogModule, MatCheckboxModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule],
+  imports: [MatDialogModule, MatCheckboxModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatTooltip, MatIconModule ],
   templateUrl: './signup-customer.component.html',
   styleUrl: './signup-customer.component.css'
 })
 export class SignupcustomerComponent {
+  contactTooltip: boolean = false;
+  passwordTooltip: boolean = false;
   signupForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -42,17 +46,31 @@ export class SignupcustomerComponent {
 
   getErrorMessage(controlName: string) {
     const control = this.signupForm.get(controlName);
-    if (control.hasError('required'))
-      return `${controlName} is required`;
-    else if (control.hasError('email'))
-      return `Invalid email format`;
     if (controlName == 'contact') {
-      if (control.hasError('pattern'))
-      return 'Invalid contact';
+      if (control.hasError('required')) {
+        this.contactTooltip = false;
+        return `${controlName} is required`;
+      }
+      else if (control.hasError('pattern')) {
+        this.contactTooltip = true;
+        return 'Invalid contact';
+      }
     }  
-    if (controlName == 'password') {
-      if (control.hasError('pattern'))
+    else if (controlName == 'password') {
+      if (control.hasError('required')) {
+        this.passwordTooltip = false;
+        return `${controlName} is required`;
+      }
+      else if (control.hasError('pattern')) {
+        this.passwordTooltip = true;
         return 'Invalid password';
+      } 
+    }
+    else{
+      if (control.hasError('required'))
+        return `${controlName} is required`;
+      else if (control.hasError('email'))
+        return `Invalid email format`;
     }
     return '';
   }
@@ -74,6 +92,7 @@ export class SignupcustomerComponent {
           sessionStorage.setItem("email", res.email);
           sessionStorage.setItem("role", res.roleId.toString());
           sessionStorage.setItem("Token", res.token);
+          sessionStorage.setItem("IsLoggedIn", "true");
           this.toaster.success("Welcome to Helperland.");
           this.router.navigate(['dashboard']);
         },

@@ -1,26 +1,36 @@
-<form #resetpassForm="ngForm" class="container d-flex flex-column align-items-center mt-5" (submit)="onSubmit()">
-    <div class="row mb-4 mt-5">
-        <div class="col-12 form-floating">
-            <input type="password" class="w-100" name="Password" cdkFocusInitial [(ngModel)]="resetObject.Password" placeholder="Password" ngModel required />
-            <div *ngIf="resetpassForm.controls['Password'].invalid && (resetpassForm.controls['Password'].dirty || resetpassForm.controls['Password'].touched)" class="text-danger">
-                Password is required
+<form #resetpassForm="ngForm" class="container mt-5" (submit)="onSubmit()">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <span>Password</span>
+                <input type="password" name="Password" class="form-control" [(ngModel)]="resetObject.Password" placeholder="Password" required pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,14}$">
+                <div *ngIf="resetpassForm.controls['Password']?.invalid && (resetpassForm.controls['Password'].dirty || resetpassForm.controls['Password'].touched)" class="text-danger">
+                    <div *ngIf="resetpassForm.controls['Password'].errors?.['required']">Password is required</div>
+                    <div *ngIf="resetpassForm.controls['Password'].errors?.['pattern']">Invalid Password <mat-icon class="pt-1" matTooltip="Password must contain at least 1 capital letter, 1 small letter, 1 number and one special character. Password length must be between 6 to 14 characters.">help</mat-icon></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row mb-4">
-        <div class="col-12 form-floating">
-            <input type="password" class="w-100" name="Confpassword" placeholder="Confirm Passsword" ngModel required />
-            <div *ngIf="resetpassForm.controls['Confpassword'].invalid && (resetpassForm.controls['Confpassword'].dirty || resetpassForm.controls['Confpassword'].touched)" class="text-danger">
-                Confirm Password is required
-            </div>
-            <div *ngIf="resetpassForm.controls['Password'].value !== resetpassForm.controls['Confpassword'].value && resetpassForm.controls['Confpassword'].dirty" class="text-danger">
-                Password and Confirm Passsword must be same
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <span>Confirm Password</span>
+                <input type="password" name="ConfPassword" class="form-control" [(ngModel)]="resetObject.ConfPassword" placeholder="Confirm Password" required>
+                <div *ngIf="resetpassForm.controls['ConfPassword']?.invalid && (resetpassForm.controls['ConfPassword'].dirty || resetpassForm.controls['ConfPassword'].touched)" class="text-danger">
+                    <div *ngIf="resetpassForm.controls['ConfPassword'].errors?.['required']">
+                        Confirm Password is required
+                    </div>
+                </div>
+                <div *ngIf="resetObject.ConfPassword !== resetObject.Password && resetpassForm.controls['ConfPassword'].valid" class="text-danger">
+                    Password and Confirm Password must match
+                </div>
             </div>
         </div>
     </div>
-    <input type="hidden" name="Email" [(ngModel)]="resetObject.Email">
-    <button type="submit" class="btn btn-info rounded-pill text-white text-center fs-3 col-2 mb-5 py-3 submitBtn" mat-button mat-dialog-close [disabled]="resetpassForm.invalid">Send</button>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <input type="hidden" name="Email" [(ngModel)]="resetObject.Email">
+            <button type="submit" class="btn btn-info rounded-pill text-white text-center fs-3 col-6 mb-5 py-3 submitBtn" [disabled]="!resetpassForm.form.valid">Save</button>
+        </div>
+    </div>
 </form>
-<p class="text-center">
-    <a class="login" mat-button mat-dialog-close>Login Now</a>
-</p>
