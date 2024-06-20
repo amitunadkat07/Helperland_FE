@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IResGetUser } from '../../../../interfaces/user-action';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserService } from '../../../../services/userservices/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-data',
@@ -15,7 +17,7 @@ export class DashboardDataComponent {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'actions'];
   datasource: MatTableDataSource<IResGetUser>;
 
-  constructor( private userService: UserService) {
+  constructor( private userService: UserService, private toaster: ToastrService, private router: Router ) {
     
   }
 
@@ -28,6 +30,9 @@ export class DashboardDataComponent {
         },
         error:(error)=>{
           console.log(error);
+          this.toaster.error("Error Loading the dashboard.");
+          sessionStorage.clear();
+          this.router.navigate(["home"]);
         },
       });
   }

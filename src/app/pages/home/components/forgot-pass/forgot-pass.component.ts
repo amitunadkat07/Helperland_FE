@@ -26,11 +26,10 @@ export class ForgotpassComponent {
 
   getErrorMessage(controlName: string) {
     const control = this.forgotPassForm.get(controlName);
-    if (control.hasError('required')) {
-      return `This field is required`;
-    } else if (control.hasError('email')) {
+    if (control.hasError('required'))
+      return `${controlName} is required`;
+    else if (control.hasError('email')) 
       return `Invalid email format`;
-    }
     return '';
   }
 
@@ -45,7 +44,14 @@ export class ForgotpassComponent {
       	    this.router.navigate(["home"]);
 	      },
         error: (error)=>{
-          this.toaster.error(error.error.errorMessage);
+          if (error.error.type == "error") {
+            console.log("Internal Server Error.");
+            this.toaster.error("Internal Server Error.");
+          }
+          else{
+            console.log(error.error.errorMessage);
+            this.toaster.error(error.error.errorMessage);
+          }
         },
       });
   }
@@ -53,7 +59,7 @@ export class ForgotpassComponent {
   openLogin(){
     const referenceVar = this.dialog.open(LoginComponent, {
       width: '350px',
-      height: '400px'
+      height: '430px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");

@@ -1,5 +1,13 @@
+.ps-17{
+    padding-left: 17rem;
+}
+
 .submitBtn:disabled {
     background-color: #828282;
     border: none;
     color: #1e1e1e;
+}
+
+.w-80 {
+    width: 80.3%;
 }

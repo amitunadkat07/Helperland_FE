@@ -2,31 +2,34 @@
     <div class="logoimg">
         <img src="../../../assets/images/logo1.png" alt="Helperland">
     </div>
-    <div class="mt-4 navbarlinks">
+    <div class="d-none d-lg-block mt-4 navbarlinks">
         <div class="d-flex mt-3 justify-content-end innerlinks">
             <div class="mx-4">
                 <button class="btn btn-lg">Book Now</button>
             </div>
             <div class="mx-4 pt-2">
-                <a href="#" class="fs-3 ">Prices & Services</a>
+                <a href="#" class="fs-3">Prices & Services</a>
             </div>
             <div class="mx-4 pt-2">
-                <a href="#" class="fs-3 ">Warranty</a>
+                <a href="#" class="fs-3">Warranty</a>
             </div>
             <div class="mx-4 pt-2">
-                <a href="#" class="fs-3 ">Blog</a>
+                <a href="#" class="fs-3">Blog</a>
             </div>
             <div class="mx-4 pt-2">
-                <a href="#" class="fs-3 ">Contact</a>
+                <a href="#" class="fs-3">Contact</a>
             </div>
             @if (loggedIn == "true") {
-                <div class="mx-4 pt-2 notify">
-                    <i class="fa-regular fa-bell fa-2xl" style="color: #ffffff;"></i>
+                <div class="mx-4 notify">
+                    <button class="sideBtn">
+                        <mat-icon class="text-white mt-2 fs-2">notifications</mat-icon>
+                    </button>
                 </div>
-                <div class="mx-4 pt-2 profile">
-                    <i class="fa-regular fa-circle-user fa-2xl" style="color: #ffffff;" mat-button (click)="openProfile()"></i>
+                <div class="mx-4 profile">
+                    <button class="sideBtn" (click)="openProfile()">
+                        <mat-icon class="text-white mt-2 fs-2">account_circle</mat-icon>
+                    </button>
                 </div>
-                
             } @else {
                 <div class="mx-4">
                     <button class="btn btn-lg" mat-button (click)="openLogin()">Login</button>
@@ -36,6 +39,9 @@
                 </div>
             }
         </div>
+    </div>
+    <div class="d-block d-lg-none mt-4 w-100">
+        <button type="button" class="position-absolute end-0 me-5 bg-transparent border-0 pe-auto py-2 mt-3" [matMenuTriggerFor]="menu"><i class="fa-solid fa-bars fa-2xl" style="color: #ffffff;"></i></button>
     </div>
 </div>
 <ng-container *ngIf="visibleProfile">
@@ -54,3 +60,27 @@
       </ul>
     </div>
 </ng-container>
+    <mat-menu #menu="matMenu" class="profileMenu">
+        <button class="text-white" mat-menu-item>Book Now</button>
+        <a href="#" class="fs-3 text-white" mat-menu-item>Prices & Services</a>
+        <a href="#" class="fs-3 text-white" mat-menu-item>Warranty</a>
+        <a href="#" class="fs-3 text-white" mat-menu-item>Blog</a>
+        <a href="#" class="fs-3 text-white" mat-menu-item>Contact</a>
+        @if (loggedIn == "true") {
+            <div mat-menu-item>
+                <button class="menuBtn">
+                    <mat-icon class="text-white py-2 fs-2">notifications</mat-icon>
+                    <span>Notifications</span>
+                </button>
+            </div>
+            <div mat-menu-item>
+                <button class="menuBtn" (click)="openProfile()">
+                    <mat-icon class="text-white py-2 fs-2">account_circle</mat-icon>
+                    <span>Profile</span>
+                </button>
+            </div>
+        } @else {
+            <button class="text-white" (click)="openLogin()" mat-menu-item>Login</button>
+            <button class="text-white" (click)="openSignup()" mat-menu-item>Become a Helper!</button>
+        }
+    </mat-menu>

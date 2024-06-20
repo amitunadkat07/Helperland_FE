@@ -37,11 +37,6 @@
     padding-right: 50px;
 }
 
-.notify i,
-.profile i{
-    cursor: pointer;
-}
-
 .profilePopup{
     position: absolute;
     background: #b5b3b3;
@@ -59,4 +54,18 @@
     padding-top: 5px;
     padding-bottom: 5px;
     list-style-type: none;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.menuBtn{
+    background: dimgray;
+    border: none;
+    color: white;
+}
+
+.sideBtn{
+    border: none !important;
 }

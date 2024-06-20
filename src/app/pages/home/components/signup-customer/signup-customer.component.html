@@ -1,4 +1,13 @@
-<h1 class="text-center" mat-dialog-title>Create an account</h1>
+<div class="d-flex justify-content-between w-100">
+  <div>
+    <h1 class="ps-17" mat-dialog-title>Create an account</h1>
+  </div>
+  <div class="text-right">
+    <button mat-button mat-dialog-close class="border-0 bg-transparent mt-4 pt-3 me-2">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </button>
+  </div>
+</div>
 <mat-dialog-content>
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="row mb-3">
@@ -23,8 +32,9 @@
             </span>
           </div>
           <div class="col-6 form-floating mb-4">
-            <input type="text" class="w-100" formControlName="contact" placeholder="Mobile Number" />
-            <span *ngIf="signupForm.get('contact').invalid && (signupForm.get('contact').dirty || signupForm.get('contact').touched)" class="text-danger">
+            <button type="button" disabled>+91</button>
+            <input type="text" class="w-80" formControlName="contact" placeholder="Mobile Number" />
+            <span *ngIf="signupForm.get('contact').invalid && (signupForm.get('contact').dirty || signupForm.get('contact').touched)" class="text-danger contactError">
               {{ getErrorMessage('contact') }}
             </span>
           </div>
@@ -37,9 +47,9 @@
               </span>
           </div>
           <div class="col-6 form-floating mb-4">
-              <input type="password" class="w-100" formControlName="confPassword" placeholder="Confirm Passsword" />
-              <span *ngIf="signupForm.get('confPassword').invalid && (signupForm.get('confPassword').dirty || signupForm.get('confPassword').touched)" class="text-danger">
-                {{ getErrorMessage('confPassword') }}
+              <input type="password" class="w-100" formControlName="confirmPassword" placeholder="Confirm Passsword" />
+              <span *ngIf="signupForm.get('confirmPassword').invalid && (signupForm.get('confirmPassword').dirty || signupForm.get('confirmPassword').touched)" class="text-danger">
+                {{ getErrorMessage('confirmPassword') }}
               </span>
               <span *ngIf="signupForm.hasError('passwordsMatch')" class="text-danger">
                 Passwords do not match
@@ -47,7 +57,7 @@
           </div>
       </div>
       <input type="hidden" class="w-100" formControlName="roleId" placeholder="Role Id" />
-      <mat-checkbox formControlName="privacyPolicy">I have read the privacy policy .</mat-checkbox>
+      <mat-checkbox formControlName="privacyPolicy">I have read the <a [routerLink]="['privacypolicy']" routerLinkActive="active" mat-dialog-close>privacy policy</a>.</mat-checkbox>
       <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Register</button>
       </div>

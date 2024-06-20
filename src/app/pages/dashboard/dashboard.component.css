@@ -13,6 +13,10 @@
     background: #1f7b8d;
 }
 
+.active{
+    background: #006a80 !important;
+}
+
 .blueBtn{
     background-color: #006a80;
     color: white;

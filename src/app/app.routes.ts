@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { PagenotfoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ResetpassComponent } from './pages/home/components/reset-pass/reset-pass.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +23,14 @@ export const routes: Routes = [
     {
         path: 'resetpassword',
         component: ResetpassComponent
+    },
+    {
+        path: 'privacypolicy',
+        component: PrivacyPolicyComponent
+    },
+    {
+        path: 'terms&conditions',
+        component: TermsComponent
     },
     //Wild Card Route for 404 request 
     { 

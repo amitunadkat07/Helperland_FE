@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { LoginComponent } from '../../pages/home/components/login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { SignupproviderComponent } from '../../pages/home/components/signup-provider/signup-provider.component';
 import { NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, NgIf],
+  imports: [MatButtonModule, NgIf, MatMenuModule, MatIconModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -39,7 +41,7 @@ export class HeaderComponent {
   openLogin(){
     const referenceVar = this.dialog.open(LoginComponent, {
       width: '350px',
-      height: '400px'
+      height: '430px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
@@ -48,7 +50,7 @@ export class HeaderComponent {
 
   openSignup(){
     const referenceVar = this.dialog.open(SignupproviderComponent, {
-      width: '370px',
+      width: '500px',
       height: '680px'
     });
     referenceVar.afterClosed().subscribe(()=>{

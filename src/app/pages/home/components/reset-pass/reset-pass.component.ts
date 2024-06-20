@@ -33,8 +33,14 @@ export class ResetpassComponent {
           this.toaster.success('You can change your password, but please remember to follow security guidelines.');
         },
         error: (error) => {
-          this.toaster.error(error.error.errorMessage);
-          this.router.navigate(["home"]);
+          if (error.error.type == "error") {
+            console.log("Internal Server Error.");
+            this.toaster.error("Internal Server Error.");
+          }
+          else{
+            this.toaster.error(error.error.errorMessage);
+            this.router.navigate(["home"]);
+          }
         }
       });
   }
@@ -47,7 +53,15 @@ export class ResetpassComponent {
           this.router.navigate(["home"]);
         },
         error: (error)=>{
-          this.toaster.error(error.error.errorMessage);
+          if (error.error.type == "error") {
+            console.log("Internal Server Error.");
+            this.toaster.error("Internal Server Error.");
+          }
+          else{
+            console.log(error.error.errorMessage);
+            this.toaster.error(error.error.errorMessage);
+          }
+          
         },
       });
   }

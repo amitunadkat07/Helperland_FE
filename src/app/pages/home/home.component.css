@@ -28,3 +28,18 @@
     border: 1px solid white;
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 992px) {
+    .homecontent{
+        padding-top: 5rem;
+    }
+    .sidecontent{
+        width: 90vw;
+        padding-left: 0;
+        text-align: center;
+    }
+    .centercontent{
+        margin-top: 5rem;
+        align-self: center;
+    }
+}

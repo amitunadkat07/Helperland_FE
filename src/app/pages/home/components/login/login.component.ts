@@ -30,11 +30,10 @@ export class LoginComponent {
 
   getErrorMessage(controlName: string) {
     const control = this.loginForm.get(controlName);
-    if (control.hasError('required')) {
-      return `This field is required`;
-    } else if (control.hasError('email')) {
+    if (control.hasError('required'))
+      return `${controlName} is required`;
+    else if (control.hasError('email'))
       return `Invalid email format`;
-    }
     return '';
   }
   
@@ -59,16 +58,22 @@ export class LoginComponent {
           this.router.navigate(["dashboard"]);
         },
         error: (error) => {
-          console.log(error);
-          this.toaster.error(error);
+          if (error.error.type == "error") {
+            console.log("Internal Server Error.");
+            this.toaster.error("Internal Server Error.");
+          }
+          else{
+            console.log(error);
+            this.toaster.error(error);
+          }
         },
       });
   }
 
   openSignup(){
     const referenceVar = this.dialog.open(SignupcustomerComponent, {
-      width: '370px',
-      height: '420px'
+      width: '500px',
+      height: '520px'
     });
     referenceVar.afterClosed().subscribe(()=>{
       console.log("Pop-up closed");
