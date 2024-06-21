@@ -8,6 +8,7 @@ export interface IForgotPass {
 
 export interface IUrlCheck extends IForgotPass {
     ResetKey: string;
+    Date: string;
 }
 
 export interface IResetPass extends ILogin {

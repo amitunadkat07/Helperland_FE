@@ -1,25 +1,29 @@
 import { NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IResSignup, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoaderComponent } from '../../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-signupprovider',
   standalone: true,
-  imports: [MatCheckboxModule, MatDialogModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatIconModule],
+  imports: [MatCheckboxModule, MatDialogModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatIconModule, MatTooltipModule, LoaderComponent],
   templateUrl: './signup-provider.component.html',
   styleUrl: './signup-provider.component.css'
 })
 export class SignupproviderComponent {
   contactTooltip: boolean = false;
   passwordTooltip: boolean = false;
+  loading = false;
+  show = false;
   signupForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -33,13 +37,17 @@ export class SignupproviderComponent {
     validators: this.passwordsMatchValidator.bind(this),
   });
 
-  constructor( private toaster: ToastrService, private userService: UserService){
+  constructor( private toaster: ToastrService, private userService: UserService, private dialogRef: MatDialogRef<SignupproviderComponent>){
   }
 
   passwordsMatchValidator(group: FormGroup): { [key: string]: boolean } {
     const password = group.get('password').value;
     const confirmPassword = group.get('confirmPassword').value;
     return password === confirmPassword ? null : { passwordsMatch: true };
+  }
+
+  pwdShowHide() {
+    this.show = !this.show;
   }
 
   getErrorMessage(controlName: string) {
@@ -53,6 +61,9 @@ export class SignupproviderComponent {
         this.contactTooltip = true;
         return 'Invalid contact';
       }
+      else {
+        this.contactTooltip = false
+      }
     }  
     else if (controlName == 'password') {
       if (control.hasError('required')) {
@@ -63,6 +74,9 @@ export class SignupproviderComponent {
         this.passwordTooltip = true;
         return 'Invalid password';
       } 
+      else {
+        this.passwordTooltip = false
+      }
     }
     else {
       if (control.hasError('required'))
@@ -74,6 +88,7 @@ export class SignupproviderComponent {
   }
 
   onSubmit(){
+    this.loading = true;
     const signupData: ISignup = {
       FirstName: this.signupForm.get('firstName').value,
       LastName: this.signupForm.get('lastName').value,
@@ -91,16 +106,18 @@ export class SignupproviderComponent {
           sessionStorage.setItem("role", res.roleId.toString());
           this.toaster.info("Once the admin will approve you can login to the portal.", null, { timeOut: 8000 });
           this.toaster.success("Service Provider registered.");
+          this.loading = false;
+          this.dialogRef.close();
         },
         error:(error)=>{
           if (error.error.type == "error") {
-            console.log("Internal Server Error.");
             this.toaster.error("Internal Server Error.");
           }
           else{
-            console.log(error.error);
-            this.toaster.error(error.error);
+            this.toaster.error(error.error.errorMessage);
           }
+          this.loading = false;
+          this.dialogRef.close();
         },
       });
   }

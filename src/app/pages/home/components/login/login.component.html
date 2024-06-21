@@ -13,7 +13,7 @@
     <div class="row mb-3">
       <div class="col-12 form-floating mb-4 email">
         <input type="email" class="w-100" formControlName="email" placeholder="Email" />
-        <button><img src="../../../../../assets/images/person-circle.svg" alt="person-circle"></button>
+        <button type="button" disabled><img src="../../../../../assets/images/person-circle.svg" alt="person-circle"></button>
         <span *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
           {{ getErrorMessage('email') }}
         </span>
@@ -30,7 +30,7 @@
         </span>
       </div>
     </div>
-    <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button mat-dialog-close [disabled]="loginForm.invalid">Login</button>
+    <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button [disabled]="loginForm.invalid">Login</button>
   </form>
   <p class="text-center">
     <a class="signup" mat-button mat-dialog-close (click)="openForgetPassword()">Forgot Password?</a>
@@ -40,3 +40,6 @@
     <a class="signup" mat-button mat-dialog-close (click)="openSignup()">Create an account</a>
   </p>
 </mat-dialog-content>
+@if (loading) {
+  <app-loader />
+}

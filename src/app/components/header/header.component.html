@@ -28,6 +28,7 @@
                 <div class="mx-4 profile">
                     <button class="sideBtn" [matMenuTriggerFor]="menu">
                         <mat-icon class="text-white mt-2 fs-2">account_circle</mat-icon>
+                        <mat-icon class="text-white mt-2 fs-2">arrow_drop_down</mat-icon>
                     </button>
                 </div>
             } @else {
@@ -46,26 +47,10 @@
 </div>
 <mat-menu #menu="matMenu" class="profileMenu">
     <h3 class="text-white" mat-menu-item>Welcome, {{name}}</h3>
-    <a class="text-white" href="#" mat-menu-item>My Dashboard</a>
+    <a class="text-white" [routerLink]="['home']" routerLinkActive="active" mat-menu-item>My Dashboard</a>
     <a class="text-white" href="#" mat-menu-item>My Settings</a>
     <a class="text-white" (click)="logOut()" mat-menu-item>Logout</a>
 </mat-menu>
-<ng-container *ngIf="visibleProfile">
-    <div class="shadow-sm text-white p-4 profilePopup">
-      <h3>Welcome, {{name}}</h3>
-      <ul>
-        <li>
-            <a class="text-white" href="#">My Dashboard</a>
-        </li>
-        <li>
-            <a class="text-white" href="#">My Settings</a>
-        </li>
-        <li>
-            <a class="text-white" href="#" (click)="logOut()">Logout</a>
-        </li>
-      </ul>
-    </div>
-</ng-container>
 <mat-menu #menuIcon="matMenu" class="profileMenu">
     <button class="text-white" mat-menu-item>Book Now</button>
     <a href="#" class="fs-3 text-white" mat-menu-item>Prices & Services</a>
@@ -79,8 +64,8 @@
                 <span>Notifications</span>
             </button>
         </div>
-        <div mat-menu-item>
-            <button class="menuBtn" [matMenuTriggerFor]="menu">
+        <div mat-menu-item [matMenuTriggerFor]="menu">
+            <button type="button" class="menuBtn">
                 <mat-icon class="text-white py-2 fs-2">account_circle</mat-icon>
                 <span>Profile</span>
             </button>
@@ -90,3 +75,6 @@
         <button class="text-white" (click)="openSignup()" mat-menu-item>Become a Helper!</button>
     }
 </mat-menu>
+@if (loading) {
+    <app-loader />
+}

@@ -12,7 +12,7 @@
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="row mb-4">
           <div class="col-12 form-floating">
-            <input type="text" class="w-100" formControlName="firstName" placeholder="First Name" />
+            <input type="text" maxlength="25" class="w-100" formControlName="firstName" placeholder="First Name" />
             <span *ngIf="signupForm.get('firstName').invalid && (signupForm.get('firstName').dirty || signupForm.get('firstName').touched)" class="text-danger">
               {{ getErrorMessage('firstName') }}
             </span>
@@ -20,7 +20,7 @@
         </div>
         <div class="row mb-4">
             <div class="col-12 form-floating">
-              <input type="text" class="w-100" formControlName="lastName" placeholder="Last Name" />
+              <input type="text" maxlength="25" class="w-100" formControlName="lastName" placeholder="Last Name" />
               <span *ngIf="signupForm.get('lastName').invalid && (signupForm.get('lastName').dirty || signupForm.get('lastName').touched)" class="text-danger">
                 {{ getErrorMessage('lastName') }}
               </span>
@@ -37,7 +37,7 @@
         <div class="row mb-4">
             <div class="col-12 form-floating">
               <button type="button" disabled>+91</button>
-              <input type="text" class="w-87" formControlName="contact" placeholder="Mobile Number" />
+              <input type="text" maxlength="10" class="w-87" formControlName="contact" placeholder="Mobile Number" />
               <span *ngIf="signupForm.get('contact').invalid && (signupForm.get('contact').dirty || signupForm.get('contact').touched)" class="text-danger">
                 {{ getErrorMessage('contact') }}
                 @if (contactTooltip == true) {
@@ -47,8 +47,11 @@
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-12 form-floating">
-              <input type="password" class="w-100" formControlName="password" placeholder="Password" />
+            <div class="col-12 form-floating password">
+              <input [type]="show ? 'text' : 'password'" class="w-100" formControlName="password" placeholder="Password" />
+              <button type="button" (click)="pwdShowHide()">
+                <mat-icon>{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
               <span *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)" class="text-danger">
                 {{ getErrorMessage('password') }}
                 @if (passwordTooltip == true) {
@@ -71,7 +74,10 @@
         <input type="hidden" class="w-100" formControlName="roleId" placeholder="Role Id" />
         <mat-checkbox formControlName="privacyPolicy">I accept <a [routerLink]="['terms&conditions']" routerLinkActive="active" mat-dialog-close>terms and conditions</a> & <a [routerLink]="['privacypolicy']" routerLinkActive="active" mat-dialog-close>privacy policy</a>.</mat-checkbox>
         <div class="d-flex justify-content-center mt-5">
-            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button cdkFocusInitial mat-dialog-close [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
+            <button type="submit" class="btn btn-lg btn-info rounded-pill text-white text-center fs-3 col-12 mb-5 py-3 submitBtn" mat-button [disabled]="signupForm.invalid">Getting started <i class="fa-solid fa-arrow-right ms-1"></i></button>
         </div>
     </form>
 </mat-dialog-content>
+@if (loading) {
+  <app-loader />
+}

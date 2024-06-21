@@ -9,5 +9,22 @@
 }
 
 .w-80 {
-    width: 80.3%;
+    width: 80%;
+}
+
+.password {
+    position: relative;
+}
+
+.password button {
+    position: absolute;
+    right: 1.2rem;
+    background-color: inherit;
+    padding: 3px;
+    padding-right: 3px;
+    border: 0;
+}
+
+.password button:hover {
+    cursor: pointer;
 }

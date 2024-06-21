@@ -33,3 +33,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>
+@if (loading) {
+    <app-loader />
+}

@@ -2,26 +2,28 @@ import { NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../login/login.component';
 import { IForgotPass, IResForgotPass } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
+import { LoaderComponent } from '../../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-forgotpass',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule, MatDialogModule, NgIf],
+  imports: [ReactiveFormsModule, HttpClientModule, MatDialogModule, NgIf, LoaderComponent],
   templateUrl: './forgot-pass.component.html',
   styleUrl: './forgot-pass.component.css'
 })
 export class ForgotpassComponent {
+  loading = false;
   forgotPassForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService) {
+  constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService, private dialogRef: MatDialogRef<ForgotpassComponent>) {
   }
 
   getErrorMessage(controlName: string) {
@@ -34,6 +36,7 @@ export class ForgotpassComponent {
   }
 
   onSubmit(){
+    this.loading = true;
     const forgotPassData: IForgotPass = {
       Email: this.forgotPassForm.get('email').value,
     };
@@ -42,17 +45,21 @@ export class ForgotpassComponent {
 		    next: (res: IResForgotPass) => {
 	          this.toaster.success('Link to reset the password is sent.');
       	    this.router.navigate(["home"]);
+            this.loading = false;
+            this.dialogRef.close();
 	      },
         error: (error)=>{
           if (error.error.type == "error") {
-            console.log("Internal Server Error.");
             this.toaster.error("Internal Server Error.");
           }
           else{
             this.toaster.error(error.error.errorMessage);
           }
+          this.loading = false;
+          this.dialogRef.close();
         },
       });
+    
   }
 
   openLogin(){
@@ -61,7 +68,6 @@ export class ForgotpassComponent {
       height: '430px'
     });
     referenceVar.afterClosed().subscribe(()=>{
-      console.log("Pop-up closed");
     })
   }
 }

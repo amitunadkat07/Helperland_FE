@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { LoginComponent } from '../login/login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,17 +11,20 @@ import { IResSignup, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { LoaderComponent } from '../../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-signupcustomer',
   standalone: true,
-  imports: [MatDialogModule, MatCheckboxModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatTooltip, MatIconModule ],
+  imports: [MatDialogModule, MatCheckboxModule, ReactiveFormsModule, HttpClientModule, NgIf, RouterModule, MatTooltip, MatIconModule, LoaderComponent ],
   templateUrl: './signup-customer.component.html',
   styleUrl: './signup-customer.component.css'
 })
 export class SignupcustomerComponent {
   contactTooltip: boolean = false;
   passwordTooltip: boolean = false;
+  loading = false;
+  show = false;
   signupForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -35,13 +38,17 @@ export class SignupcustomerComponent {
     validators: this.passwordsMatchValidator.bind(this),
   });
 
-  constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService){
+  constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService, private dialogRef: MatDialogRef<SignupcustomerComponent>){
   }
 
   passwordsMatchValidator(group: FormGroup): { [key: string]: boolean } {
     const password = group.get('password').value;
     const confirmPassword = group.get('confirmPassword').value;
     return password === confirmPassword ? null : { passwordsMatch: true };
+  }
+
+  pwdShowHide() {
+    this.show = !this.show;
   }
 
   getErrorMessage(controlName: string) {
@@ -55,6 +62,9 @@ export class SignupcustomerComponent {
         this.contactTooltip = true;
         return 'Invalid contact';
       }
+      else {
+        this.contactTooltip = false
+      }
     }  
     else if (controlName == 'password') {
       if (control.hasError('required')) {
@@ -65,6 +75,9 @@ export class SignupcustomerComponent {
         this.passwordTooltip = true;
         return 'Invalid password';
       } 
+      else {
+        this.passwordTooltip = false
+      }
     }
     else{
       if (control.hasError('required'))
@@ -76,6 +89,7 @@ export class SignupcustomerComponent {
   }
 
   onSubmit(){
+    this.loading = true;
     const signupData: ISignup = {
       FirstName: this.signupForm.get('firstName').value,
       LastName: this.signupForm.get('lastName').value,
@@ -95,16 +109,18 @@ export class SignupcustomerComponent {
           sessionStorage.setItem("IsLoggedIn", "true");
           this.toaster.success("Welcome to Helperland.");
           this.router.navigate(['dashboard']);
+          this.loading = false;
+          this.dialogRef.close();
         },
         error:(error)=>{
           if (error.error.type == "error") {
-            console.log("Internal Server Error.");
             this.toaster.error("Internal Server Error.");
           }
           else{
-            console.log(error.error);
-            this.toaster.error(error.error);
+            this.toaster.error(error.error.errorMessage);
           }
+          this.loading = false;
+          this.dialogRef.close();
         },
       });
   }
@@ -115,7 +131,6 @@ export class SignupcustomerComponent {
       height: '430px'
     });
     referenceVar.afterClosed().subscribe(()=>{
-      console.log("Pop-up closed");
     })
   }
 }
