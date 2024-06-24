@@ -23,6 +23,14 @@ export class ResetpassComponent {
   resetObject: IResetPass = {} as IResetPass;
 
   constructor(private routes: ActivatedRoute, private router: Router, private toaster: ToastrService, private userService: UserService) {
+    this.routeValues();
+  }
+
+  ngOnInit(){
+    this.resetPassLink();
+  }
+
+  routeValues(){
     this.routes.queryParams.subscribe(params => {
       this.urlObject = {
         ResetKey: params['t'],
@@ -33,7 +41,7 @@ export class ResetpassComponent {
     });
   }
 
-  ngOnInit(){
+  resetPassLink(){
     this.loading = true;
     this.userService.resetPassLink(this.urlObject)
       .subscribe({

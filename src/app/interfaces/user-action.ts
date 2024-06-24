@@ -51,3 +51,16 @@ export interface IResSignup {
 export interface IResGetUser extends IResSignup {
     resetKey: string;
 }
+
+export interface IResGetProfile extends IGetProfile, IError {
+    
+}
+
+export interface IGetProfile {
+    firstName: string;
+    lastName: string;
+    contact: string;
+    language: string;
+    dateOfBirth: Date;
+    email: string;
+}

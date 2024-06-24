@@ -1,0 +1,61 @@
+<form [formGroup]="profileForm" class="overflow-hidden" (ngSubmit)="onSubmit()">
+    <div class="row mx-3 mb-3 mt-5">
+        <div class="col-4 form-floating mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName">
+            </mat-form-field>
+        </div>
+        <div class="col-4 form-floating mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <div class="col-4 form-floating mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Email Address</mat-label>
+                <input matInput formControlName="email" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mx-3 mb-3 mt-3">
+        <div class="col-4 form-floating mb-4 d-flex">
+            <div>
+                <button type="button" style="height: 56px; border-radius: 5px;" disabled>+91</button>
+            </div>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput formControlName="contact">
+            </mat-form-field>
+        </div>
+        <div class="col-4 form-floating mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput [matDatepicker]="dateOfBirth" [min]="minDate" [max]="maxDate" formControlName="dateOfBirth" readonly="true">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfBirth disabled="false"></mat-datepicker>
+            </mat-form-field>            
+        </div>
+    </div>
+    <hr>
+    <div class="row mx-3 mb-3 mt-5">
+        <div class="col-4 form-floating mb-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Preferred Language</mat-label>
+                <mat-select formControlName="language">
+                  <mat-option value="English">English</mat-option>
+                  <mat-option value="Gujarati">Gujarati</mat-option>
+                  <mat-option value="Hindi">Hindi</mat-option>
+                  <mat-option value="Marathi">Marathi</mat-option>
+                  <mat-option value="Tamil">Tamil</mat-option>
+                  <mat-option value="Telugu">Telugu</mat-option>
+                  <mat-option value="Punjabi">Punjabi</mat-option>
+                  <mat-option value="Bengali">Bengali</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5">Save</button>
+</form>

@@ -25,6 +25,10 @@ export class DashboardDataComponent {
   }
 
   ngOnInit(){
+    this.getUser();
+  }
+
+  getUser(){
     this.loading = true;
     this.userService.getUser()
       .subscribe({

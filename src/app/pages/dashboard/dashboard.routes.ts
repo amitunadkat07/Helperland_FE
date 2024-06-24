@@ -30,6 +30,10 @@ export const dashboardRoutes: Routes = [
                 loadComponent: () => import('./components/notifications/notifications.component').then(m => m.NotificationsComponent)
             },
             {
+                path: 'myprofile',
+                loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'

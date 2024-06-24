@@ -7,7 +7,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiInterceptor } from './interceptor/api/api.interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideToastr(), provideHttpClient(withInterceptors([apiInterceptor])), provideAnimationsAsync()]
+  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideToastr(), provideHttpClient(withInterceptors([apiInterceptor])), provideAnimationsAsync(), provideNativeDateAdapter()]
 };

@@ -48,7 +48,7 @@
 <mat-menu #menu="matMenu" class="profileMenu">
     <h3 class="text-white" mat-menu-item>Welcome, {{name}}</h3>
     <a class="text-white" [routerLink]="['home']" routerLinkActive="active" mat-menu-item>My Dashboard</a>
-    <a class="text-white" href="#" mat-menu-item>My Settings</a>
+    <a class="text-white" [routerLink]="['myprofile']" mat-menu-item>My Settings</a>
     <a class="text-white" (click)="logOut()" mat-menu-item>Logout</a>
 </mat-menu>
 <mat-menu #menuIcon="matMenu" class="profileMenu">
