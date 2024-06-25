@@ -9,16 +9,20 @@ import { IGetProfile, IResGetProfile } from '../../../../interfaces/user-action'
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
+import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-my-details',
   standalone: true,
-  imports: [ ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, LoaderComponent, MatSelectModule ],
+  imports: [ ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, LoaderComponent, MatSelectModule, MatIconModule, MatTooltip, NgIf ],
   templateUrl: './my-details.component.html',
   styleUrl: './my-details.component.css'
 })
 export class MyDetailsComponent {
   loading = false;
+  contactTooltip = false;
   loggedIn: string;
   email: string;
   minDate: Date;
@@ -46,8 +50,23 @@ export class MyDetailsComponent {
 
   getErrorMessage(controlName: string) {
     const control = this.profileForm.get(controlName);
-    if (control.hasError('required'))
-      return `${controlName} is required`;
+    if (controlName == 'contact') {
+      if (control.hasError('required')) {
+        this.contactTooltip = false;
+        return `${controlName} is required`;
+      }
+      else if (control.hasError('pattern')) {
+        this.contactTooltip = true;
+        return 'Invalid contact';
+      }
+      else {
+        this.contactTooltip = false
+      }
+    }
+    else{
+      if (control.hasError('required'))
+        return `${controlName} is required`;
+    }
     return '';
   }
 

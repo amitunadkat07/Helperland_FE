@@ -5,15 +5,21 @@
                 <mat-label>First Name</mat-label>
                 <input matInput formControlName="firstName">
             </mat-form-field>
+            <span *ngIf="profileForm.get('firstName').invalid && (profileForm.get('firstName').dirty || profileForm.get('firstName').touched)" class="text-danger">
+                {{ getErrorMessage('firstName') }}
+            </span>
         </div>
         <div class="col-4 form-floating mb-4">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Last Name</mat-label>
                 <input matInput formControlName="lastName">
             </mat-form-field>
+            <span *ngIf="profileForm.get('lastName').invalid && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)" class="text-danger">
+                {{ getErrorMessage('lastName') }}
+            </span>
         </div>
         <div class="col-4 form-floating mb-4">
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 disabledInput">
                 <mat-label>Email Address</mat-label>
                 <input matInput formControlName="email" readonly>
             </mat-form-field>
@@ -24,19 +30,30 @@
             <div>
                 <button type="button" style="height: 56px; border-radius: 5px;" disabled>+91</button>
             </div>
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Mobile Number</mat-label>
-                <input matInput formControlName="contact">
-            </mat-form-field>
+            <div class="w-100">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mobile Number</mat-label>
+                    <input matInput formControlName="contact">
+                </mat-form-field>
+                <span *ngIf="profileForm.get('contact').invalid && (profileForm.get('contact').dirty || profileForm.get('contact').touched)" class="text-danger contactError">
+                    {{ getErrorMessage('contact') }}
+                    @if (contactTooltip == true) {
+                      <mat-icon class="pt-1" matTooltip="Contact number must contain 10 digits & can't contain any other character than digit.">help</mat-icon>
+                    }
+                  </span>
+            </div>
         </div>
         <div class="col-4 form-floating mb-4">
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="outline" class="w-100 disabledInput">
                 <mat-label>Date of Birth</mat-label>
                 <input matInput [matDatepicker]="dateOfBirth" [min]="minDate" [max]="maxDate" formControlName="dateOfBirth" readonly="true">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
                 <mat-datepicker #dateOfBirth disabled="false"></mat-datepicker>
-            </mat-form-field>            
+            </mat-form-field>
+            <span *ngIf="profileForm.get('dateOfBirth').invalid && (profileForm.get('dateOfBirth').dirty || profileForm.get('dateOfBirth').touched)" class="text-danger">
+                {{ getErrorMessage('dateOfBirth') }}
+            </span>
         </div>
     </div>
     <hr>
@@ -55,7 +72,13 @@
                   <mat-option value="Bengali">Bengali</mat-option>
                 </mat-select>
             </mat-form-field>
+            <span *ngIf="profileForm.get('language').invalid && (profileForm.get('language').dirty || profileForm.get('language').touched)" class="text-danger">
+                {{ getErrorMessage('language') }}
+            </span>
         </div>
     </div>
-    <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5">Save</button>
+    <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5" [disabled]="profileForm.invalid">Save</button>
 </form>
+@if (loading) {
+    <app-loader />
+}

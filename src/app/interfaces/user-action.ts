@@ -64,3 +64,13 @@ export interface IGetProfile {
     dateOfBirth: Date;
     email: string;
 }
+
+export interface IPasswordChange {
+    Email: string;
+    OldPassword: string;
+    NewPassword: string;
+}
+
+export interface IResPasswordChange extends IResForgotPass {
+    
+}

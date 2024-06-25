@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IForgotPass, IGetProfile, ILogin, IResForgotPass, IResGetProfile, IResGetUser, IResLogin, IResSignup, IResetPass, ISignup, IUrlCheck } from '../../interfaces/user-action';
+import { IForgotPass, IGetProfile, ILogin, IPasswordChange, IResForgotPass, IResGetProfile, IResGetUser, IResLogin, IResPasswordChange, IResSignup, IResetPass, ISignup, IUrlCheck } from '../../interfaces/user-action';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,11 @@ export class UserService {
     return this.httpClient.get<IResGetProfile>(`Helperland/GetProfile?email=${email}`)
   }
 
-  updateProfile(profile: IGetProfile): Observable<IResGetProfile>{
-    return this.httpClient.put<IResGetProfile>('Helperland/UpdateProfile', profile)
+  updateProfile(IGetProfile: IGetProfile): Observable<IResGetProfile>{
+    return this.httpClient.put<IResGetProfile>('Helperland/UpdateProfile', IGetProfile)
+  }
+
+  updatePassword(IPasswordChange: IPasswordChange): Observable<IResPasswordChange>{
+    return this.httpClient.put<IResPasswordChange>('Helperland/UpdatePassword', IPasswordChange)
   }
 }

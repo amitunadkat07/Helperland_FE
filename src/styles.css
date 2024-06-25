@@ -12,3 +12,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white !important;
     margin-top: 0.5rem;
 }
+
+.disabledInput .mdc-text-field--outlined {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border: 1px solid #ccc;
+    pointer-events: none;
+}
