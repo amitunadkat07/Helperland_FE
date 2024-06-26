@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IForgotPass, IGetProfile, ILogin, IPasswordChange, IResForgotPass, IResGetProfile, IResGetUser, IResLogin, IResPasswordChange, IResSignup, IResetPass, ISignup, IUrlCheck } from '../../interfaces/user-action';
+import { IAddress, IError, IForgotPass, IGetProfile, ILogin, IPasswordChange, IResForgotPass, IResGetAddress, IResGetProfile, IResGetUser, IResLogin, IResPasswordChange, IResSignup, IResetPass, ISignup, IUrlCheck } from '../../interfaces/user-action';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +44,25 @@ export class UserService {
 
   updatePassword(IPasswordChange: IPasswordChange): Observable<IResPasswordChange>{
     return this.httpClient.put<IResPasswordChange>('Helperland/UpdatePassword', IPasswordChange)
+  }
+
+  getAddressByUser(email: String): Observable<IResGetAddress[]>{
+    return this.httpClient.get<IResGetAddress[]>(`Helperland/GetAddressByUser?email=${email}`)
+  }
+
+  getAddressById(id: number): Observable<IResGetAddress>{
+    return this.httpClient.get<IResGetAddress>(`Helperland/GetAddressById?id=${id}`)
+  }
+
+  addAddress(IAddress: IAddress): Observable<IError>{
+    return this.httpClient.post<IError>('Helperland/CreateAddress', IAddress)
+  }
+
+  deleteAddress(addressId: number): Observable<any>{
+    return this.httpClient.delete<any>(`Helperland/DeleteAddress?id=${addressId}`)
+  }
+
+  editAddress(IAddress: IAddress): Observable<IError>{
+    return this.httpClient.put<IError>('Helperland/UpdateAddress', IAddress)
   }
 }

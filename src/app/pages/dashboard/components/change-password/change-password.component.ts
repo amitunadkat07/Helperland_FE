@@ -22,7 +22,6 @@ export class ChangePasswordComponent {
   show = false;
   loading = false;
   loggedIn: string;
-  email: string;
   passwordTooltip = false;
   changePasswordForm = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -35,8 +34,6 @@ export class ChangePasswordComponent {
 
   constructor( private userService: UserService, private toaster: ToastrService, private router: Router ){ 
     this.loggedIn = sessionStorage.getItem('IsLoggedIn');
-    this.email = sessionStorage.getItem('Email');
-    this.changePasswordForm.patchValue({ email: this.email })
   }
 
   passwordsMatchValidator(group: FormGroup): { [key: string]: boolean } {
@@ -74,7 +71,7 @@ export class ChangePasswordComponent {
   onSubmit(){
     this.loading = true;
     const changePasswordData: IPasswordChange = {
-      Email: this.changePasswordForm.get('email').value,
+      Email: sessionStorage.getItem('Email'),
       OldPassword: this.changePasswordForm.get('oldPassword').value,
       NewPassword: this.changePasswordForm.get('newPassword').value
     }
@@ -83,7 +80,6 @@ export class ChangePasswordComponent {
         next: (res: IResPasswordChange) => {
           this.toaster.success("Password changed successfully!")
           this.changePasswordForm.reset();
-          this.changePasswordForm.patchValue({ email: res.email })
           this.loading = false;
         },
         error:(error)=>{

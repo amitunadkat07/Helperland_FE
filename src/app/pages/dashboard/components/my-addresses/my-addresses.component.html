@@ -1,1 +1,28 @@
-<p>my-addresses works!</p>
+<div class="tableData mx-5">
+    @if (length > 0) {
+        <table class="table table-responsive" mat-table [dataSource]="datasource">
+            <ng-container matColumnDef="addresses">
+                <th mat-header-cell *matHeaderCellDef class="ps-5"> Addresses </th>
+                <td mat-cell *matCellDef="let element" class="ps-5">
+                    <span>
+                        <p>Address: {{element.house}}, {{element.street}}, {{element.city}} - {{element.zipCode}}</p>
+                        <p>Phone Number: {{element.contact}}</p>
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element" class="pt-3">
+                    <mat-icon class="me-4" (click)="addNewAddress(element.addressId, true)">edit_square</mat-icon>
+                    <mat-icon (click)="deleteAddress(element.addressId)" >delete</mat-icon>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    }
+    @else {
+        <h3 class="mt-5">No address is linked with your account click on Add New Address button given below to add one.</h3>
+    }
+</div>
+<button type="button" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 ms-5 p-3 px-5" (click)="addNewAddress(0, false)">Add New Address</button>

@@ -74,3 +74,27 @@ export interface IPasswordChange {
 export interface IResPasswordChange extends IResForgotPass {
     
 }
+
+export interface IResGetAddress extends IError {
+    addressId: number;
+    street: string;
+    house: string;
+    zipCode: string
+    city: string;
+    contact: string;
+}
+
+export interface IAddress {
+    AddressId: number;
+    Email: string;
+    Contact: string;
+    Street: string;
+    House: string;
+    City: string;
+    ZipCode: string;
+}
+
+export interface IOperationType {
+    addressId: number;
+    isEdit: boolean;
+}

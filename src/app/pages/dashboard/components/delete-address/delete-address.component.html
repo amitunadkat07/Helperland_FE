@@ -1,0 +1,16 @@
+<h1 mat-dialog-title class="text-center">
+    Delete Address
+</h1>
+<mat-dialog-content>
+    <p>
+        Are you sure you want to delete this address?
+    </p>
+    <div class="row mt-2">
+        <div class="col-6 mb-3">
+            <button type="button" class="btn btn-lg bg-danger rounded text-white text-center fs-3 col-12 mb-5 py-3" mat-button mat-dialog-close>No</button>
+        </div>
+        <div class="col-6 mb-3">
+            <button type="button" class="btn btn-lg bg-success rounded text-white text-center fs-3 col-12 mb-5 py-3" mat-button (click)="deleteAddress()">Yes</button>
+        </div>
+    </div>
+</mat-dialog-content>
