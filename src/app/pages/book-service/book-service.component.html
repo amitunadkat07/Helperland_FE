@@ -1,0 +1,27 @@
+<app-header />
+<div class="text-center mt-4 pt-2">
+    <h2>
+        Set up your cleaning service
+    </h2>
+</div>
+<div class="row">
+    <div class="col-8">
+        <mat-stepper [linear]="true" #stepper>
+            <mat-step label="Setup Service" [stepControl]="setupService.zipCodeCheckForm">
+                <app-setup-service (messageEvent)="receiveMessage($event, stepper)" #setupService/>
+            </mat-step>
+            <mat-step label="Schedule & Plan">
+                <app-schedule #schedule />
+            </mat-step>
+            <mat-step label="Your Details">
+                <app-your-details #yourDetails />
+            </mat-step>
+            <mat-step label="Make Payment">
+                <app-payment #payment />
+            </mat-step>
+        </mat-stepper>
+    </div>
+    <div class="col-3">
+        <app-payment-summary />
+    </div>
+</div>

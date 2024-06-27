@@ -50,12 +50,12 @@ export class SignupproviderComponent {
     this.show = !this.show;
   }
 
-  getErrorMessage(controlName: string) {
+  getErrorMessage(controlName: string, displayName: string) {
     const control = this.signupForm.get(controlName);
     if (controlName == 'contact') {
       if (control.hasError('required')) {
         this.contactTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.contactTooltip = true;
@@ -68,7 +68,7 @@ export class SignupproviderComponent {
     else if (controlName == 'password') {
       if (control.hasError('required')) {
         this.passwordTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.passwordTooltip = true;
@@ -80,7 +80,7 @@ export class SignupproviderComponent {
     }
     else {
       if (control.hasError('required'))
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       else if (control.hasError('email'))
         return `Invalid email format`;
     }

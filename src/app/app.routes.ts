@@ -4,6 +4,7 @@ import { PagenotfoundComponent } from './pages/page-not-found/page-not-found.com
 import { ResetpassComponent } from './pages/home/components/reset-pass/reset-pass.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './pages/terms/terms.component';
+import { BookServiceComponent } from './pages/book-service/book-service.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,11 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
+        pathMatch: 'full'
+    },
+    {
+        path: 'bookservice',
+        component: BookServiceComponent,
         pathMatch: 'full'
     },
     {

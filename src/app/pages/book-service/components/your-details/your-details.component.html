@@ -1,0 +1,24 @@
+<div>
+    <h2>
+        Enter your contact details, so we can serve you in better way!
+    </h2>
+    @for (element of elements; track $index) {
+        <mat-card appearance="outlined">
+            <mat-card-content>
+                <mat-radio-button value="{{element.addressId}}">
+                    <p class="mt-2">
+                        Address: {{element.house}}, {{element.street}}, {{element.city}} - {{element.zipCode}}
+                    </p>
+                    <p>
+                        Phone Number: {{element.contact}}
+                    </p>
+                </mat-radio-button>
+            </mat-card-content>
+        </mat-card>
+    }
+    <button type="button" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 mt-3 p-3 px-5" (click)="addNewAddress(0, false)">Add New Address</button>
+</div>
+<hr class="my-5">
+<div class="text-end">
+    <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5 fs-3">Continue</button>
+</div>

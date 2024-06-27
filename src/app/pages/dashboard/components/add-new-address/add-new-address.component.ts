@@ -64,12 +64,12 @@ export class AddNewAddressComponent {
     }
   }
 
-  getErrorMessage(controlName: string) {
+  getErrorMessage(controlName: string, displayName: string) {
     const control = this.addAddressForm.get(controlName);
     if (controlName == 'contact') {
       if (control.hasError('required')) {
         this.contactTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.contactTooltip = true;
@@ -82,11 +82,11 @@ export class AddNewAddressComponent {
     else if (controlName == 'zipCode') {
       if (control.hasError('required')) {
         this.zipCodeTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.zipCodeTooltip = true;
-        return 'Invalid password';
+        return 'Invalid zipCode';
       } 
       else {
         this.zipCodeTooltip = false
@@ -94,7 +94,7 @@ export class AddNewAddressComponent {
     }
     else{
       if (control.hasError('required'))
-        return `${controlName} is required`;
+        return `${displayName} is required`;
     }
     return '';
   }
@@ -134,7 +134,7 @@ export class AddNewAddressComponent {
       this.userService.editAddress(addressData)
         .subscribe({
           next: (res: IError) => {
-            this.toaster.success("Address edited successfully.");
+            this.toaster.success("Address changed successfully.");
             this.dialogRef.close();
             this.loading = false;
           },

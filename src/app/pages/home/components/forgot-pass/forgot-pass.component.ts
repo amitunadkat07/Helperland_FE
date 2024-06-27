@@ -26,10 +26,10 @@ export class ForgotpassComponent {
   constructor( private dialog: MatDialog, private router: Router, private toaster: ToastrService, private userService: UserService, private dialogRef: MatDialogRef<ForgotpassComponent>) {
   }
 
-  getErrorMessage(controlName: string) {
+  getErrorMessage(controlName: string, displayName: string) {
     const control = this.forgotPassForm.get(controlName);
     if (control.hasError('required'))
-      return `${controlName} is required`;
+      return `${displayName} is required`;
     else if (control.hasError('email')) 
       return `Invalid email format`;
     return '';

@@ -14,7 +14,7 @@
         <div class="col-12 form-floating mb-4">
           <input type="email" class="w-100" formControlName="email" placeholder="Email" />
           <span *ngIf="forgotPassForm.get('email').invalid && (forgotPassForm.get('email').dirty || forgotPassForm.get('email').touched)" class="text-danger">
-            {{ getErrorMessage('email') }}
+            {{ getErrorMessage('email', 'Email address') }}
           </span>
         </div>
       </div>

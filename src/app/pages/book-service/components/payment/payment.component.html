@@ -1,0 +1,22 @@
+<div>
+    <h2>
+        Pay securely with Helperland payment gateway!
+    </h2>
+    <div>
+        <h4>Promo code (optional)</h4>
+    <form [formGroup]="paymentForm" class="overflow-hidden">
+        <div class="d-flex">
+            <div class="d-flex flex-column flex-wrap">
+                <mat-form-field appearance="outline">
+                    <input maxlength="6" matInput placeholder="Promo code (optional)" formControlName="promo">
+                </mat-form-field>
+            </div>
+            <div class="pt-3">
+                <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

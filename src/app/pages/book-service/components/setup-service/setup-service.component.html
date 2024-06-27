@@ -1,0 +1,24 @@
+<div>
+    <h4>Enter your Postal Code</h4>
+    <form [formGroup]="zipCodeCheckForm" class="overflow-hidden" (ngSubmit)="onSubmit()">
+        <div class="d-flex">
+            <div class="d-flex flex-column flex-wrap">
+                <mat-form-field appearance="outline">
+                    <mat-label>Postal Code</mat-label>
+                    <input maxlength="6" matInput placeholder="Postal Code" formControlName="zipCode">
+                </mat-form-field>
+                <span *ngIf="zipCodeCheckForm.get('zipCode').invalid && (zipCodeCheckForm.get('zipCode').dirty || zipCodeCheckForm.get('zipCode').touched)" class="text-danger">
+                    {{ getErrorMessage('zipCode', 'Postal Code') }}
+                </span>
+                @if (errorMessage) {
+                    <span class="text-danger">{{errorMessage}}</span>
+                }
+            </div>
+            <div class="pt-3">
+                <button type="submit" class="btn btn-lg rounded-pill border-0 shadow-none blueBtn mx-4 p-3 px-5" [disabled]="zipCodeCheckForm.invalid">
+                    Check Availability
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

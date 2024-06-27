@@ -4,9 +4,11 @@
     </div>
     <div class="d-none d-lg-block mt-4 navbarlinks">
         <div class="d-flex mt-3 justify-content-end innerlinks">
-            <div class="mx-4">
-                <button class="btn btn-lg">Book Now</button>
-            </div>
+            @if (loggedIn == "true") {
+                <div class="mx-4">
+                    <a [routerLink]="['../bookservice']" routerLinkActive="active" class="btn border border-white btn-lg">Book Now</a>
+                </div>
+            }
             <div class="mx-4 pt-2">
                 <a href="#" class="fs-3">Prices & Services</a>
             </div>
@@ -47,8 +49,8 @@
 </div>
 <mat-menu #menu="matMenu" class="profileMenu">
     <h3 class="text-white" mat-menu-item>Welcome, {{name}}</h3>
-    <a class="text-white" [routerLink]="['home']" routerLinkActive="active" mat-menu-item>My Dashboard</a>
-    <a class="text-white" [routerLink]="['myprofile']" mat-menu-item>My Settings</a>
+    <a class="text-white" [routerLink]="['../dashboard/home']" routerLinkActive="active" mat-menu-item>My Dashboard</a>
+    <a class="text-white" [routerLink]="['../dashboard/myprofile']" mat-menu-item>My Settings</a>
     <a class="text-white" (click)="logOut()" mat-menu-item>Logout</a>
 </mat-menu>
 <mat-menu #menuIcon="matMenu" class="profileMenu">

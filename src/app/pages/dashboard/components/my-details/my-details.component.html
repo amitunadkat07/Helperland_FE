@@ -6,7 +6,7 @@
                 <input matInput formControlName="firstName">
             </mat-form-field>
             <span *ngIf="profileForm.get('firstName').invalid && (profileForm.get('firstName').dirty || profileForm.get('firstName').touched)" class="text-danger">
-                {{ getErrorMessage('firstName') }}
+                {{ getErrorMessage('firstName', 'Firstname') }}
             </span>
         </div>
         <div class="col-4 form-floating mb-4">
@@ -15,7 +15,7 @@
                 <input matInput formControlName="lastName">
             </mat-form-field>
             <span *ngIf="profileForm.get('lastName').invalid && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)" class="text-danger">
-                {{ getErrorMessage('lastName') }}
+                {{ getErrorMessage('lastName', 'Lastname') }}
             </span>
         </div>
         <div class="col-4 form-floating mb-4">
@@ -36,7 +36,7 @@
                     <input matInput formControlName="contact">
                 </mat-form-field>
                 <span *ngIf="profileForm.get('contact').invalid && (profileForm.get('contact').dirty || profileForm.get('contact').touched)" class="text-danger contactError">
-                    {{ getErrorMessage('contact') }}
+                    {{ getErrorMessage('contact', 'Contact number') }}
                     @if (contactTooltip == true) {
                       <mat-icon class="pt-1" matTooltip="Contact number must contain 10 digits & can't contain any other character than digit.">help</mat-icon>
                     }
@@ -52,7 +52,7 @@
                 <mat-datepicker #dateOfBirth disabled="false"></mat-datepicker>
             </mat-form-field>
             <span *ngIf="profileForm.get('dateOfBirth').invalid && (profileForm.get('dateOfBirth').dirty || profileForm.get('dateOfBirth').touched)" class="text-danger">
-                {{ getErrorMessage('dateOfBirth') }}
+                {{ getErrorMessage('dateOfBirth', 'Date of Birth') }}
             </span>
         </div>
     </div>
@@ -73,7 +73,7 @@
                 </mat-select>
             </mat-form-field>
             <span *ngIf="profileForm.get('language').invalid && (profileForm.get('language').dirty || profileForm.get('language').touched)" class="text-danger">
-                {{ getErrorMessage('language') }}
+                {{ getErrorMessage('language', 'Language') }}
             </span>
         </div>
     </div>

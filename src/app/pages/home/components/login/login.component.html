@@ -15,7 +15,7 @@
         <input type="email" class="w-100" formControlName="email" placeholder="Email" />
         <button type="button" disabled><img src="../../../../../assets/images/person-circle.svg" alt="person-circle"></button>
         <span *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
-          {{ getErrorMessage('email') }}
+          {{ getErrorMessage('email', 'Email address') }}
         </span>
       </div>
     </div>
@@ -26,7 +26,7 @@
           <mat-icon>{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <span *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)" class="text-danger">
-          {{ getErrorMessage('password') }}
+          {{ getErrorMessage('password', 'Password') }}
         </span>
       </div>
     </div>

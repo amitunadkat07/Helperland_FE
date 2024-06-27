@@ -14,13 +14,13 @@
         <div class="col-6 form-floating mb-4">
           <input type="text" maxlength="25" class="w-100" formControlName="firstName" placeholder="First Name" />
           <span *ngIf="signupForm.get('firstName').invalid && (signupForm.get('firstName').dirty || signupForm.get('firstName').touched)" class="text-danger">
-            {{ getErrorMessage('firstName') }}
+            {{ getErrorMessage('firstName', 'Firstname') }}
           </span>
         </div>
         <div class="col-6 form-floating mb-4">
           <input type="text" maxlength="25" class="w-100" formControlName="lastName" placeholder="Last Name" />
           <span *ngIf="signupForm.get('lastName').invalid && (signupForm.get('lastName').dirty || signupForm.get('lastName').touched)" class="text-danger">
-            {{ getErrorMessage('lastName') }}
+            {{ getErrorMessage('lastName', 'Lastname') }}
           </span>
         </div>
       </div>
@@ -28,14 +28,14 @@
           <div class="col-6 form-floating mb-4">
             <input type="email" class="w-100" formControlName="email" placeholder="Email Address" />
             <span *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)" class="text-danger">
-              {{ getErrorMessage('email') }}
+              {{ getErrorMessage('email', 'Email address') }}
             </span>
           </div>
           <div class="col-6 form-floating mb-4">
             <button type="button" disabled>+91</button>
             <input type="text" maxlength="10" class="w-80" formControlName="contact" placeholder="Mobile Number" />
             <span *ngIf="signupForm.get('contact').invalid && (signupForm.get('contact').dirty || signupForm.get('contact').touched)" class="text-danger contactError">
-              {{ getErrorMessage('contact') }}
+              {{ getErrorMessage('contact', 'Contact number') }}
               @if (contactTooltip == true) {
                 <mat-icon class="pt-1" matTooltip="Contact number must contain 10 digits & can't contain any other character than digit.">help</mat-icon>
               }
@@ -49,7 +49,7 @@
                 <mat-icon>{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
               <span *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)" class="text-danger">
-                {{ getErrorMessage('password') }}
+                {{ getErrorMessage('password', 'Password') }}
                 @if (passwordTooltip == true) {
                   <mat-icon class="pt-1" matTooltip="Password must contain at least 1 capital letter, 1 small letter, 1 number and one special character. Password length must be in between 6 to 14 characters.">help</mat-icon>
                 }
@@ -58,7 +58,7 @@
           <div class="col-6 form-floating mb-4">
               <input type="password" class="w-100" formControlName="confirmPassword" placeholder="Confirm Passsword" />
               <span *ngIf="signupForm.get('confirmPassword').invalid && (signupForm.get('confirmPassword').dirty || signupForm.get('confirmPassword').touched)" class="text-danger">
-                {{ getErrorMessage('confirmPassword') }}
+                {{ getErrorMessage('confirmPassword', 'Confirm Password') }}
               </span>
               <span *ngIf="signupForm.hasError('passwordsMatch') && signupForm.get('confirmPassword').valid" class="text-danger">
                 Passwords do not match

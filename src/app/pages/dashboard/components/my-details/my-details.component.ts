@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { SharedService } from '../../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-my-details',
@@ -27,6 +28,7 @@ export class MyDetailsComponent {
   email: string;
   minDate: Date;
   maxDate: Date;
+  name: string;
   profileForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -36,7 +38,7 @@ export class MyDetailsComponent {
     language: new FormControl('', Validators.required)
   });
 
-  constructor( private userService: UserService, private toaster: ToastrService, private router: Router ){ 
+  constructor( private userService: UserService, private sharedService: SharedService, private toaster: ToastrService, private router: Router ){ 
     this.loggedIn = sessionStorage.getItem('IsLoggedIn');
     this.email = sessionStorage.getItem('Email');
     const currentYear = new Date().getFullYear();
@@ -48,12 +50,12 @@ export class MyDetailsComponent {
     this.getProfile();
   }
 
-  getErrorMessage(controlName: string) {
+  getErrorMessage(controlName: string, displayName: string) {
     const control = this.profileForm.get(controlName);
     if (controlName == 'contact') {
       if (control.hasError('required')) {
         this.contactTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.contactTooltip = true;
@@ -65,7 +67,7 @@ export class MyDetailsComponent {
     }
     else{
       if (control.hasError('required'))
-        return `${controlName} is required`;
+        return `${displayName} is required`;
     }
     return '';
   }
@@ -117,6 +119,9 @@ export class MyDetailsComponent {
       .subscribe({
         next: (res: IResGetProfile) => {
           this.toaster.success("Detail updated successfully!")
+          this.name = res.firstName + " " + res.lastName;
+          sessionStorage.setItem("Name", this.name);
+          this.sharedService.setSharedData(this.name);
           this.getProfile();
           this.loading = false;
         },

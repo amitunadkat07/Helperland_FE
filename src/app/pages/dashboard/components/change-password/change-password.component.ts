@@ -20,11 +20,12 @@ import { NgIf } from '@angular/common';
 })
 export class ChangePasswordComponent {
   show = false;
+  hide = true;
   loading = false;
   loggedIn: string;
   passwordTooltip = false;
   changePasswordForm = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl(sessionStorage.getItem('Email'), Validators.required),
     oldPassword: new FormControl('', Validators.required),
     newPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,14}$')]),
     confirmPassword: new FormControl('', Validators.required),
@@ -46,12 +47,16 @@ export class ChangePasswordComponent {
     this.show = !this.show;
   }
 
-  getErrorMessage(controlName: string) {
+  confPwdShowHide() {
+    this.hide = !this.hide;
+  }
+
+  getErrorMessage(controlName: string, displayName: string) {
     const control = this.changePasswordForm.get(controlName);
     if (controlName == 'newPassword') {
       if (control.hasError('required')) {
         this.passwordTooltip = false;
-        return `${controlName} is required`;
+        return `${displayName} is required`;
       }
       else if (control.hasError('pattern')) {
         this.passwordTooltip = true;
@@ -63,7 +68,7 @@ export class ChangePasswordComponent {
     }
     else{
       if (control.hasError('required'))
-        return `${controlName} is required`;
+        return `${displayName} is required`;
     }
     return '';
   }
