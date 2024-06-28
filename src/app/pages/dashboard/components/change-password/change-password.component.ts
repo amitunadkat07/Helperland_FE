@@ -6,7 +6,6 @@ import { LoaderComponent } from '../../../../components/loader/loader.component'
 import { MatTooltip } from '@angular/material/tooltip';
 import { UserService } from '../../../../services/userservices/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { IPasswordChange, IResPasswordChange } from '../../../../interfaces/user-action';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
@@ -33,7 +32,7 @@ export class ChangePasswordComponent {
     validators: this.passwordsMatchValidator.bind(this),
   });
 
-  constructor( private userService: UserService, private toaster: ToastrService, private router: Router ){ 
+  constructor( private userService: UserService, private toaster: ToastrService ){ 
     this.loggedIn = sessionStorage.getItem('IsLoggedIn');
   }
 
@@ -85,6 +84,9 @@ export class ChangePasswordComponent {
         next: (res: IResPasswordChange) => {
           this.toaster.success("Password changed successfully!")
           this.changePasswordForm.reset();
+          this.changePasswordForm.patchValue({
+            email: sessionStorage.getItem('Email'),
+          })
           this.loading = false;
         },
         error:(error)=>{
