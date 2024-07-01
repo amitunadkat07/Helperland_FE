@@ -98,3 +98,10 @@ export interface IOperationType {
     addressId: number;
     isEdit: boolean;
 }
+
+export interface IResponse<T> {
+    data: T;
+    isSuccess: boolean;
+    statusCode: string;
+    message: string;
+}

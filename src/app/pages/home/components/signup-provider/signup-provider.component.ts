@@ -6,7 +6,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { IResSignup, ISignup } from '../../../../interfaces/user-action';
+import { IResSignup, IResponse, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -88,7 +88,7 @@ export class SignupproviderComponent {
   }
 
   onSubmit(){
-    this.loading = true;
+    // this.loading = true;
     const signupData: ISignup = {
       FirstName: this.signupForm.get('firstName').value,
       LastName: this.signupForm.get('lastName').value,
@@ -100,22 +100,19 @@ export class SignupproviderComponent {
     };
     this.userService.signup(signupData)
       .subscribe({
-        next: (res: IResSignup) => {
-          sessionStorage.setItem("name", res.firstName + " " + res.lastName);
-          sessionStorage.setItem("email", res.email);
-          sessionStorage.setItem("role", res.roleId.toString());
-          this.toaster.info("Once the admin will approve you can login to the portal.", null, { timeOut: 8000 });
-          this.toaster.success("Service Provider registered.");
+        next: (res: IResponse<IResSignup>) => {
+          if (res.isSuccess) {
+            this.toaster.info("Once the admin will approve you can login to the portal.", null, { timeOut: 8000 });
+            this.toaster.success("Service Provider registered.");
+          }
+          else{
+            this.toaster.error(res.message);
+          }
           this.loading = false;
           this.dialogRef.close();
         },
         error:(error)=>{
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-          }
+          this.toaster.error("Internal Server Error.");
           this.loading = false;
           this.dialogRef.close();
         },

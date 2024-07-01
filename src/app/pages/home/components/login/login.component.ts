@@ -7,7 +7,7 @@ import { SignupcustomerComponent } from '../signup-customer/signup-customer.comp
 import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ForgotpassComponent } from '../forgot-pass/forgot-pass.component';
-import { ILogin, IResLogin } from '../../../../interfaces/user-action';
+import { ILogin, IResLogin, IResponse } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import {MatIconModule} from '@angular/material/icon';
 import { LoaderComponent } from '../../../../components/loader/loader.component';
@@ -51,32 +51,26 @@ export class LoginComponent {
     };
       this.userService.login(loginData)
       .subscribe({
-        next: (res: IResLogin) => {
-          sessionStorage.setItem("Name", res.firstName + " " + res.lastName);
-          sessionStorage.setItem("Email", res.email);
-          sessionStorage.setItem("RoleId", res.roleId.toString());
-          sessionStorage.setItem("Token", res.token);
-          sessionStorage.setItem("IsLoggedIn", "true");
-          this.toaster.success('Logged in Successfully.');
-          this.router.navigate(["dashboard"]);
+        next: (res: IResponse<IResLogin>) => {
+          if (res.isSuccess) {
+            sessionStorage.setItem("Name", res.data.firstName + " " + res.data.lastName);
+            sessionStorage.setItem("Email", res.data.email);
+            sessionStorage.setItem("RoleId", res.data.roleId.toString());
+            sessionStorage.setItem("Token", res.data.token);
+            sessionStorage.setItem("IsLoggedIn", "true");
+            this.toaster.success(res.message);
+            this.router.navigate(["dashboard"]);
+          }
+          else {
+            this.toaster.error(res.message);
+          }
           this.loading = false;
           this.dialogRef.close();
         },
         error: (error) => {
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-            this.loading = false
-            this.dialogRef.close();
-          }
-          else if (error.error.errorMessage == "Either Email or Password is incorrect, Please check and try again!") {
-            this.toaster.error(error.error.errorMessage);
-            this.loading = false;
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-            this.loading = false
-            this.dialogRef.close();
-          }
+          this.toaster.error("Internal Server Error.");
+          this.loading = false
+          this.dialogRef.close();
         },
       });
   }

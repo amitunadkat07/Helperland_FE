@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../../services/userservices/user.service';
-import { IResForgotPass, IResetPass, IUrlCheck } from '../../../../interfaces/user-action';
+import { IResForgotPass, IResetPass, IResponse, IUrlCheck } from '../../../../interfaces/user-action';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoaderComponent } from '../../../../components/loader/loader.component';
@@ -45,17 +45,17 @@ export class ResetpassComponent {
     this.loading = true;
     this.userService.resetPassLink(this.urlObject)
       .subscribe({
-        next: (res: IResForgotPass) => {
-          this.toaster.success('You can change your password, but please remember to follow security guidelines.');
+        next: (res: IResponse<IResForgotPass>) => {
+          if (res.isSuccess) {
+            this.toaster.success(res.message);
+          }
+          else{
+            this.toaster.error(res.message);
+          }
           this.loading = false;
         },
         error: (error) => {
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-          }
+          this.toaster.error("Internal Server Error.");
           this.router.navigate(["home"]);
           this.loading = false;
         }
@@ -66,18 +66,18 @@ export class ResetpassComponent {
     this.loading = true;
     this.userService.resetPass(this.resetObject)
       .subscribe({
-        next: (res: IResForgotPass) => {
-          this.toaster.success('Password changed successfully.');
+        next: (res: IResponse<IResForgotPass>) => {
+          if (res.isSuccess) {
+            this.toaster.success(res.message);
+          }
+          else{
+            this.toaster.error(res.message);
+          }
           this.router.navigate(["home"]);
           this.loading = false;
         },
         error: (error)=>{
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-          }
+          this.toaster.error("Internal Server Error.");
           this.loading = false;
         },
       });

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookingService } from '../../../../services/bookingservices/booking.service';
-import { IError } from '../../../../interfaces/user-action';
+import { IResponse } from '../../../../interfaces/user-action';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
@@ -38,11 +38,16 @@ export class SetupServiceComponent {
   onSubmit() {
     this.bookingService.zipCodeCheck(this.zipCodeCheckForm.get('zipCode').value)
       .subscribe({
-        next: (res: IError) => {
-          this.messageEvent.emit("success");
+        next: (res: IResponse<boolean>) => {
+          if (res.isSuccess) {
+            this.messageEvent.emit(res.message);
+          }
+          else {
+            this.errorMessage = "We are not providing service in this area.";
+          }
         },
         error:(error)=>{
-          this.errorMessage = "We are not providing service in this area.";
+          this.errorMessage = "Internal server error."
         },
       });
   }

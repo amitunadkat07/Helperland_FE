@@ -6,7 +6,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../login/login.component';
-import { IForgotPass, IResForgotPass } from '../../../../interfaces/user-action';
+import { IForgotPass, IResForgotPass, IResponse } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import { LoaderComponent } from '../../../../components/loader/loader.component';
 
@@ -42,24 +42,23 @@ export class ForgotpassComponent {
     };
       this.userService.forgotPass(forgotPassData)
       .subscribe({
-		    next: (res: IResForgotPass) => {
-	          this.toaster.success('Link to reset the password is sent.');
+		    next: (res: IResponse<IResForgotPass>) => {
+          if (res.isSuccess) {
+            this.toaster.success(res.message);
       	    this.router.navigate(["home"]);
-            this.loading = false;
-            this.dialogRef.close();
+          }
+          else {
+            this.toaster.error(res.message);
+          }
+          this.loading = false;
+          this.dialogRef.close();
 	      },
         error: (error)=>{
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-          }
+          this.toaster.error("Internal Server Error.");
           this.loading = false;
           this.dialogRef.close();
         },
       });
-    
   }
 
   openLogin(){

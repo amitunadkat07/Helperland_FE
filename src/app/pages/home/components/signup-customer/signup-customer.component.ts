@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { NgIf } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { IResSignup, ISignup } from '../../../../interfaces/user-action';
+import { IResSignup, IResponse, ISignup } from '../../../../interfaces/user-action';
 import { UserService } from '../../../../services/userservices/user.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
@@ -89,7 +89,7 @@ export class SignupcustomerComponent {
   }
 
   onSubmit(){
-    this.loading = true;
+    // this.loading = true;
     const signupData: ISignup = {
       FirstName: this.signupForm.get('firstName').value,
       LastName: this.signupForm.get('lastName').value,
@@ -101,24 +101,24 @@ export class SignupcustomerComponent {
     };
     this.userService.signup(signupData)
       .subscribe({
-        next: (res: IResSignup) => {
-          sessionStorage.setItem("name", res.firstName + " " + res.lastName);
-          sessionStorage.setItem("email", res.email);
-          sessionStorage.setItem("role", res.roleId.toString());
-          sessionStorage.setItem("Token", res.token);
-          sessionStorage.setItem("IsLoggedIn", "true");
-          this.toaster.success("Welcome to Helperland.");
-          this.router.navigate(['dashboard']);
+        next: (res: IResponse<IResSignup>) => {
+          if (res.isSuccess) {
+            sessionStorage.setItem("name", res.data.firstName + " " + res.data.lastName);
+            sessionStorage.setItem("email", res.data.email);
+            sessionStorage.setItem("role", res.data.roleId.toString());
+            sessionStorage.setItem("Token", res.data.token);
+            sessionStorage.setItem("IsLoggedIn", "true");
+            this.toaster.success(res.message);
+            this.router.navigate(['dashboard']);
+          }
+          else {
+            this.toaster.error(res.message);
+          }
           this.loading = false;
           this.dialogRef.close();
         },
         error:(error)=>{
-          if (error.error.type == "error") {
-            this.toaster.error("Internal Server Error.");
-          }
-          else{
-            this.toaster.error(error.error.errorMessage);
-          }
+          this.toaster.error("Internal Server Error.");
           this.loading = false;
           this.dialogRef.close();
         },

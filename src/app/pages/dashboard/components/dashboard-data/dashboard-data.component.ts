@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IResGetUser } from '../../../../interfaces/user-action';
+import { IResGetUser, IResponse } from '../../../../interfaces/user-action';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserService } from '../../../../services/userservices/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -32,18 +32,24 @@ export class DashboardDataComponent {
     this.loading = true;
     this.userService.getUser()
       .subscribe({
-        next: (res: IResGetUser[]) => {
-          this.elements = res;
-          this.datasource = new MatTableDataSource<IResGetUser>(this.elements);
+        next: (res: IResponse<IResGetUser[]>) => {
+          if (res.isSuccess) {
+            this.elements = res.data;
+            this.datasource = new MatTableDataSource<IResGetUser>(this.elements);
+          }
+          else {
+            this.toaster.error(res.message);
+          }
           this.loading = false;
         },
         error:(error)=>{
+          console.log(error);
           if (this.loggedIn == "true") {
             this.toaster.error("Error Loading the dashboard.");
             sessionStorage.clear();
           }
           else {
-            this.toaster.error("Please login first.");
+            this.toaster.error("Internal server error.");
           }
           this.router.navigate(["home"]);
           this.loading = false;
